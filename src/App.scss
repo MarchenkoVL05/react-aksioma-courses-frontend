@@ -183,6 +183,8 @@ input.input-error {
   padding: 76px 81px;
   border-radius: 30px;
   background-color: #a38ffd;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   img {
     max-height: 396px;
   }
@@ -215,5 +217,18 @@ input.input-error {
     font-size: 20px;
     line-height: 30px;
     color: #ffffff;
+  }
+}
+
+.select-wrapper--appearance {
+  position: relative;
+  &::after {
+    content: "▼";
+    font-size: 14px;
+    color: #252525;
+    position: absolute;
+    bottom: 56px;
+    right: 20px;
+    transform: translateY(50%);
   }
 }

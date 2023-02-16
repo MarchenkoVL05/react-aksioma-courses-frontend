@@ -23,6 +23,7 @@ function HomePage() {
         setErrorStatus(true);
       });
   }, []);
+
   return (
     <>
       {userInfo && userInfo.approved && !errorStatus && <div>Welcome to HomePage, {userInfo.fullName}</div>}

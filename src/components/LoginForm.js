@@ -1,34 +1,35 @@
-import { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
-
+import { useEffect } from "react";
+import { Link, Navigate, useInRouterContext } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import axios from "../axios";
+
+import { loginUser } from "../redux/slices/userSlice";
 
 function LoginForm() {
-  const [auth, setAuth] = useState(false);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const dispatch = useDispatch();
+
   const onSubmit = (data) => {
-    axios
-      .post("/user/login", data)
-      .then((response) => {
-        localStorage.setItem("token", response.data.token);
-        setAuth(true);
-      })
-      .catch((error) => {
-        console.log(error);
-        alert(error.response.data.message);
-      });
+    dispatch(loginUser(data));
   };
+
+  const logged = useSelector((state) => state.user.logged);
+  const error = useSelector((state) => state.user.error);
+
+  useEffect(() => {
+    if (error) {
+      alert(error);
+    }
+  }, [error]);
 
   return (
     <>
-      {auth ? (
+      {logged ? (
         <Navigate to="/" />
       ) : (
         <div>

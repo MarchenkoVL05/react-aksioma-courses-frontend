@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
-
 import { useForm } from "react-hook-form";
 
-import axios from "../axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategories } from "../redux/slices/categorySlice";
+import { registerUser } from "../redux/slices/userSlice";
 
 function LoginForm() {
-  const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
-  const [registered, setRegistered] = useState(false);
 
   const {
     register,
@@ -17,35 +16,33 @@ function LoginForm() {
     formState: { errors },
   } = useForm();
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    axios
-      .get("/category")
-      .then((result) => {
-        setCategories(result.data);
-      })
+    dispatch(fetchCategories())
+      .unwrap()
       .catch((error) => {
         console.log(error);
         alert("Не удалось загрузить список отделов");
       });
-  }, []);
+  }, [dispatch]);
+
+  const categories = useSelector((state) => state.category.categories);
+  const categoriesStatus = useSelector((state) => state.category.status);
+
+  const registered = useSelector((state) => state.user.registered);
+  const registerError = useSelector((state) => state.user.error);
+
+  useEffect(() => {
+    if (registerError) {
+      alert(registerError);
+    }
+  }, [registerError]);
 
   const onSubmit = (data) => {
     const { repeatPass, ...restFormData } = data;
     data = restFormData;
-    axios
-      .post("/user/registration", data)
-      .then((response) => {
-        if (response.data.message == "Не удалось зарегестрироваться") {
-          alert(response.data.message);
-        } else {
-          const token = response.data.token;
-          localStorage.setItem("token", token);
-          setRegistered(true);
-        }
-      })
-      .catch((error) => {
-        alert("Не удалось зарегестрироваться");
-      });
+    dispatch(registerUser(data));
   };
 
   const chooseCategory = (e) => {
@@ -76,13 +73,15 @@ function LoginForm() {
             </label>
             <label>
               Отдел
-              <div className="select-wrapper">
-                <select onChange={chooseCategory} {...register("workPosition")}>
+              <div className={`${errors?.workPosition ? "select-wrapper--appearance" : "select-wrapper"}`}>
+                <select onChange={chooseCategory} {...register("workPosition", { required: "Выберите отдел" })}>
+                  {categoriesStatus == "loading" && <option>Загрузка...</option>}
                   {categories &&
                     categories.map((category) => {
                       return <option key={category._id}>{category.categoryName}</option>;
                     })}
                 </select>
+                {errors?.workPosition && <span className="error-message">{errors.workPosition.message}</span>}
               </div>
             </label>
             <label>
