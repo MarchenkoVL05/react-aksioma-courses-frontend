@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { authUser } from "../redux/slices/userSlice";
 
 import WaitApprovePage from "./WaitApprovePage";
+import MainPage from "./MainPage";
 import Loader from "../components/Loader";
 
 function HomePage() {
@@ -26,7 +27,7 @@ function HomePage() {
         {status == "loading" && <Loader />}
         {error && Object.keys(userInfo).length == 0 && <Navigate to="/login" />}
         {Object.keys(userInfo).length !== 0 && !userInfo.approved && <WaitApprovePage />}
-        {userInfo && userInfo.approved && !error && <h1>Welcome to Home Page!, {userInfo.fullName}</h1>}
+        {userInfo && userInfo.approved && !error && <MainPage />}
       </>
     );
   }
