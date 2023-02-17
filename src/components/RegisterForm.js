@@ -23,7 +23,6 @@ function LoginForm() {
       .unwrap()
       .catch((error) => {
         console.log(error);
-        alert("Не удалось загрузить список отделов");
       });
   }, [dispatch]);
 
@@ -31,13 +30,7 @@ function LoginForm() {
   const categoriesStatus = useSelector((state) => state.category.status);
 
   const registered = useSelector((state) => state.user.registered);
-  const registerError = useSelector((state) => state.user.error);
-
-  useEffect(() => {
-    if (registerError) {
-      alert(registerError);
-    }
-  }, [registerError]);
+  const error = useSelector((state) => state.user.error);
 
   const onSubmit = (data) => {
     const { repeatPass, ...restFormData } = data;
@@ -55,6 +48,7 @@ function LoginForm() {
         <Navigate to="/" />
       ) : (
         <div>
+          {<div className={`errorBox ${error ? "active" : ""}`}>{error}</div>}
           <h1 className="auth-form-title">Регистрация</h1>
           <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
             <label>

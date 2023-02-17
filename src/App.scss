@@ -26,6 +26,43 @@
   }
 }
 
+.loader {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorBox {
+  min-width: 290px;
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 30px;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #e40404;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #dd1f1f;
+  background: linear-gradient(34deg, #dd1f1f 35%, #ff4400 100%);
+  box-shadow: #dd1f1fa6 2px 2px 4px;
+  //
+  opacity: 0;
+  transform: translate(-50%, -100%);
+  transition: all 0.2s ease-in-out;
+}
+.errorBox.active {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
 .auth-form-title {
   font-weight: 600;
   font-size: 32px;

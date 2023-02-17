@@ -25,15 +25,24 @@ export const loginUser = createAsyncThunk("user/login", async (userData) => {
   }
 });
 
+export const authUser = createAsyncThunk("user/authUser", async () => {
+  try {
+    const response = await axios.get("/user/getMe", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    const customError = error.response ? error.response.data.message : "Network Error";
+    throw customError;
+  }
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    _id: "",
-    fullName: "",
-    password: "",
-    workPosition: "",
-    role: "user",
-    approved: true,
+    userInfo: {},
     status: null,
     error: null,
     registered: false,
@@ -72,6 +81,18 @@ const userSlice = createSlice({
         localStorage.setItem("token", response.token);
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.error.message;
+      })
+      .addCase(authUser.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(authUser.fulfilled, (state, action) => {
+        state.userInfo = action.payload;
+        state.status = "resolved";
+      })
+      .addCase(authUser.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.error.message;
       });

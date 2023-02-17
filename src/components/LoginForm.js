@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, Navigate, useInRouterContext } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 
@@ -21,18 +21,13 @@ function LoginForm() {
   const logged = useSelector((state) => state.user.logged);
   const error = useSelector((state) => state.user.error);
 
-  useEffect(() => {
-    if (error) {
-      alert(error);
-    }
-  }, [error]);
-
   return (
     <>
       {logged ? (
         <Navigate to="/" />
       ) : (
         <div>
+          {<div className={`errorBox ${error ? "active" : ""}`}>{error}</div>}
           <h1 className="auth-form-title">Вход</h1>
           <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
             <label>
