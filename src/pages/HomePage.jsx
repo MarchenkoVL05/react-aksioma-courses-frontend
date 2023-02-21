@@ -1,21 +1,14 @@
-import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { authUser } from "../redux/slices/userSlice";
+import useAuth from "../hooks/useAuth.js";
 
 import WaitApprovePage from "./WaitApprovePage";
 import MainPage from "./MainPage";
 import Loader from "../components/Loader";
 
 function HomePage() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(authUser());
-  }, []);
-
-  const userInfo = useSelector((state) => state.user.userInfo);
+  const userInfo = useAuth();
   const error = useSelector((state) => state.user.error);
   const status = useSelector((state) => state.user.status);
 

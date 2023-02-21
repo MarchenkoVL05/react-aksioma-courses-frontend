@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
 import AuthPage from "./pages/AuthPage";
+import LessonPage from "./pages/LessonPage";
 
 import "./App.scss";
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <AuthPage register={false} />,
+  },
+  {
+    path: "/:lessonId",
+    element: <LessonPage />,
   },
 ]);
 

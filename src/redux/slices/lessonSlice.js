@@ -16,10 +16,26 @@ export const fetchLessons = createAsyncThunk("lesson/fetchLessons", async () => 
   }
 });
 
+export const fetchOneLesson = createAsyncThunk("lesson/fetchOneLesson", async (lessonId) => {
+  try {
+    const response = await axios.get(`/lesson/${lessonId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    const customError = error.response ? error.response.data.message : "Network Error";
+    throw customError;
+  }
+});
+
 const lessonSlice = createSlice({
   name: "lesson",
   initialState: {
     lessons: [],
+    lesson: {},
     status: null,
     error: null,
   },
@@ -34,6 +50,17 @@ const lessonSlice = createSlice({
         state.lessons = action.payload;
       })
       .addCase(fetchLessons.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.error.message;
+      })
+      .addCase(fetchOneLesson.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchOneLesson.fulfilled, (state, action) => {
+        state.status = "resolved";
+        state.lesson = action.payload;
+      })
+      .addCase(fetchOneLesson.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.error.message;
       });

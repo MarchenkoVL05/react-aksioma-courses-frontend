@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import LessonLoader from "../components/LessonLoader";
 import preview from "../images/video-preview-2.png";
 
@@ -13,11 +15,13 @@ function LessonsList({ lessons, status }) {
             : lessons.map((lesson) => {
                 return (
                   <div className="lessons__item" key={lesson._id}>
-                    <img src={preview} alt="" />
-                    <div className="lessons__item-title">{lesson.title}</div>
-                    <div className="lessons__item-content">
-                      {lesson.content.length > 70 ? lesson.content.slice(0, 70) + "..." : lesson.content}
-                    </div>
+                    <Link to={lesson._id} state={status}>
+                      <img src={preview} alt="" />
+                      <div className="lessons__item-title">{lesson.title}</div>
+                      <div className="lessons__item-content">
+                        {lesson.content.length > 70 ? lesson.content.slice(0, 70) + "..." : lesson.content}
+                      </div>
+                    </Link>
                   </div>
                 );
               })}
