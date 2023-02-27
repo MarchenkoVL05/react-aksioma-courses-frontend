@@ -6,7 +6,7 @@ import useAuth from "../hooks/useAuth.js";
 import { fetchOneLesson } from "../redux/slices/lessonSlice.js";
 
 import Header from "../components/Header";
-import Video from "../components/Video.jsx";
+import Video from "../components/Video.js";
 import Test from "../components/Test.jsx";
 
 function LessonPage() {
