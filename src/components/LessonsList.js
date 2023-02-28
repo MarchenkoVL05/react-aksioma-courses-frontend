@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -10,6 +10,8 @@ import preview from "../images/video-preview-2.png";
 import remove from "../images/removeLesson.svg";
 
 function LessonsList({ lessons, status }) {
+  const [isRemoveClicked, setIsRemoveClicked] = useState(false);
+
   const dispatch = useDispatch();
   const warningRef = useRef();
 
@@ -21,32 +23,32 @@ function LessonsList({ lessons, status }) {
     let confirmRemoving = window.confirm("Вы уверены что хотите удалить этот урок?");
     if (confirmRemoving) {
       dispatch(removeLesson(lessonId));
+      setIsRemoveClicked(true);
     } else {
       return;
     }
   };
 
   useEffect(() => {
-    if (removeError) {
+    if (removeError && isRemoveClicked) {
       warningRef.current.classList.add("warning--error");
       setTimeout(() => {
         warningRef.current.classList.remove("warning--error");
+        setIsRemoveClicked(false);
       }, 3000);
     }
-  });
-
-  useEffect(() => {
-    if (message) {
+    if (message && isRemoveClicked) {
       warningRef.current.classList.add("warning--success");
       setTimeout(() => {
         warningRef.current.classList.remove("warning--success");
+        setIsRemoveClicked(false);
       }, 3000);
     }
-  });
+  }, [removeError, message, isRemoveClicked]);
 
   return (
     <section className="lessons">
-      <div ref={warningRef} className={removeError ? "warning warning--error" : "warning"}>
+      <div ref={warningRef} className="warning">
         {removeError || message}
       </div>
       <div className="lessons__wrapper">
