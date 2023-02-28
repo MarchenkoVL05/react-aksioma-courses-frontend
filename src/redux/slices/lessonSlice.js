@@ -31,6 +31,23 @@ export const fetchOneLesson = createAsyncThunk("lesson/fetchOneLesson", async (l
   }
 });
 
+export const removeLesson = createAsyncThunk("lesson/removeLesson", async (lessonId) => {
+  try {
+    const response = await axios.delete("/lesson", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      data: {
+        lessonId: lessonId,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    const customError = error.response ? error.response.data.message : "Network Error";
+    throw customError;
+  }
+});
+
 const lessonSlice = createSlice({
   name: "lesson",
   initialState: {
@@ -38,6 +55,7 @@ const lessonSlice = createSlice({
     lesson: {},
     status: null,
     error: null,
+    message: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -61,6 +79,18 @@ const lessonSlice = createSlice({
         state.lesson = action.payload;
       })
       .addCase(fetchOneLesson.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.error.message;
+      })
+      .addCase(removeLesson.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(removeLesson.fulfilled, (state, action) => {
+        state.status = "resolved";
+        state.lessons = state.lessons.filter((lesson) => lesson._id !== action.payload.removedLesson._id);
+        state.message = action.payload.message;
+      })
+      .addCase(removeLesson.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.error.message;
       });
