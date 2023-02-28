@@ -6,7 +6,7 @@ import LessonLoader from "../components/LessonLoader";
 
 import { removeLesson } from "../redux/slices/lessonSlice";
 
-import preview from "../images/video-preview-2.png";
+import preview from "../images/video-preview.png";
 import remove from "../images/removeLesson.svg";
 
 function LessonsList({ lessons, status }) {

@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
 import AuthPage from "./pages/AuthPage";
 import LessonPage from "./pages/LessonPage";
+import CreatePage from "./pages/CreatePage";
 
 import "./App.scss";
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/:lessonId",
     element: <LessonPage />,
+  },
+  {
+    path: "/create",
+    element: <CreatePage />,
   },
 ]);
 

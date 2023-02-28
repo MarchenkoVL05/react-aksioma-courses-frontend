@@ -314,6 +314,19 @@ input.input-error {
   }
 }
 
+.select-wrapper--create-form {
+  position: relative;
+  &::after {
+    content: "▼";
+    font-size: 14px;
+    color: #252525;
+    position: absolute;
+    bottom: 26px;
+    right: 20px;
+    transform: translateY(50%);
+  }
+}
+
 // Header
 .header {
   position: relative;
@@ -376,6 +389,11 @@ input.input-error {
       font-weight: 600;
     }
   }
+  &__btns-wrapper {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
 }
 
 .search {
@@ -400,6 +418,23 @@ input.input-error {
       outline: none;
       border: 1px solid #959595;
     }
+  }
+}
+
+.create-lesson-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 10px;
+  font-size: 18px;
+  color: white;
+  background: linear-gradient(169.69deg, #bcb0f5 2.48%, #7f6bdb 92.3%);
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.24);
+  border-radius: 5px;
+  &:hover {
+    background: rgb(242, 224, 99);
+    background: linear-gradient(175deg, rgba(242, 224, 99, 1) 0%, rgba(224, 173, 0, 1) 100%);
   }
 }
 
@@ -462,6 +497,7 @@ input.input-error {
     right: -15px;
     top: -15px;
     z-index: 1;
+    height: 47px;
     border: none;
     background-color: transparent;
     cursor: pointer;
@@ -542,7 +578,6 @@ input.input-error {
   background-color: #000000;
   opacity: 0.5;
   z-index: 3;
-  cursor: pointer;
 }
 
 .userInfo {
@@ -573,7 +608,7 @@ input.input-error {
   border-radius: 5px;
   font-size: 22px;
   font-weight: 600;
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  box-shadow: #00000029 0px 3px 6px, #0000003b 0px 3px 6px;
   color: #000000;
   background: rgb(195, 174, 34);
   background: linear-gradient(0deg, rgba(195, 174, 34, 1) 0%, rgba(255, 231, 122, 1) 100%);
@@ -586,7 +621,7 @@ input.input-error {
     width: 100%;
     height: 100%;
     background: #7022c3;
-    background: linear-gradient(0deg, #7749a8 0%, #a97cda 100%);
+    background: linear-gradient(169.69deg, #bcb0f5 2.48%, #7f6bdb 92.3%);
     color: #fff;
     display: flex;
     justify-content: center;
@@ -814,3 +849,107 @@ input.input-error {
   border-color: #a38ffd;
 }
 // End of Checkbox and Radio Styling
+
+// Create Form
+.create-form-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 80px 20px 100px;
+  min-height: 100%;
+  background: #f6f8ff;
+  background: radial-gradient(circle, #f6f8ff 0%, #f8edff 100%);
+}
+
+.create-lesson-form {
+  width: 900px;
+  height: min-content;
+  padding: 50px;
+  background: #ffffff;
+  border: 2px solid #f0f0f0;
+  box-shadow: 0px 8px 24px #959da533;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-weight: 600;
+    font-size: 24px;
+    color: #484848;
+  }
+  select {
+    margin-top: 15px;
+    width: 100%;
+    border-radius: 7px;
+    padding: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+    background: #f9f9f9cc;
+    border: 2px solid #eeeeee;
+    appearance: none;
+    &:focus {
+      outline: none;
+    }
+  }
+  &__text-input {
+    padding: 15px;
+    background: #f9f9f9cc;
+    border: 2px solid #eeeeee;
+    border-radius: 7px;
+    font-size: 22px;
+    &::placeholder {
+      font-size: 16px;
+      line-height: 25px;
+    }
+    &--descr {
+      height: 180px;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+  &__text-textarea {
+    padding: 15px;
+    min-height: 230px;
+    background: #f9f9f9cc;
+    border: 2px solid #eeeeee;
+    border-radius: 7px;
+    font-size: 22px;
+    &::placeholder {
+      font-size: 16px;
+      line-height: 25px;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+  &__btns-wrapper {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 45px;
+    button {
+      padding: 15px;
+      width: 50%;
+      border: none;
+      cursor: pointer;
+      border-radius: 7px;
+      font-size: 22px;
+      color: white;
+      box-shadow: #00000029 0px 3px 6px, #0000003b 0px 3px 6px;
+    }
+  }
+  &__cancel {
+    background: rgb(195, 174, 34);
+    background: linear-gradient(0deg, rgba(195, 174, 34, 1) 0%, rgb(236, 213, 112) 100%);
+  }
+  &__submit {
+    background: #7022c3;
+    background: linear-gradient(169.69deg, #bcb0f5 2.48%, #7f6bdb 92.3%);
+  }
+}
