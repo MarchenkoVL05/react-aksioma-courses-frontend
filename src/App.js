@@ -1,34 +1,34 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import HomePage from "./pages/HomePage";
-import ErrorPage from "./pages/ErrorPage";
-import AuthPage from "./pages/AuthPage";
-import LessonPage from "./pages/LessonPage";
-import CreatePage from "./pages/CreatePage";
+import HomePage from './pages/HomePage';
+import ErrorPage from './pages/ErrorPage';
+import AuthPage from './pages/AuthPage';
+import LessonPage from './pages/LessonPage';
+import CreatePage from './pages/CreatePage';
 
-import "./App.scss";
+import './App.scss';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <HomePage />,
     errorElement: <ErrorPage />,
   },
   {
-    path: "/register",
+    path: '/register',
     element: <AuthPage register={true} />,
   },
   {
-    path: "/login",
+    path: '/login',
     element: <AuthPage register={false} />,
   },
   {
-    path: "/:lessonId",
+    path: 'lesson/:lessonId',
     element: <LessonPage />,
     errorElement: <ErrorPage />,
   },
   {
-    path: "/create",
+    path: '/create',
     element: <CreatePage />,
   },
 ]);
