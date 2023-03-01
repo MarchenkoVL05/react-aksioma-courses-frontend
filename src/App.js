@@ -23,7 +23,7 @@ const router = createBrowserRouter([
     element: <AuthPage register={false} />,
   },
   {
-    path: 'lesson/:lessonId',
+    path: '/lesson/:lessonId',
     element: <LessonPage />,
     errorElement: <ErrorPage />,
   },

@@ -1,14 +1,15 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
-import useAuth from "../hooks/useAuth.js";
-import { fetchOneLesson } from "../redux/slices/lessonSlice.js";
+import useAuth from '../hooks/useAuth.js';
+import { fetchOneLesson } from '../redux/slices/lessonSlice.js';
 
-import Header from "../components/Header";
-import Video from "../components/Video.js";
-import Test from "../components/Test.jsx";
-import Loader from "../components/Loader";
+import Header from '../components/Header';
+import Video from '../components/Video.js';
+import Test from '../components/Test.jsx';
+import Loader from '../components/Loader';
+import ErrorPage from '../pages/ErrorPage';
 
 function LessonPage() {
   const dispatch = useDispatch();
@@ -21,24 +22,25 @@ function LessonPage() {
 
   const lesson = useSelector((state) => state.lesson.lesson);
   const lessonStatus = useSelector((state) => state.lesson.lessonStatus);
+  const error = useSelector((state) => state.lesson.error);
 
   return (
     <>
-      {lessonStatus == "loading" ? (
-        <Loader />
-      ) : (
+      {lessonStatus === 'loading' && !error && <Loader />}
+      {lessonStatus !== 'loading' && !error && lesson && (
         <div>
           <Header userInfo={userInfo} />
-          <div className="detail-page-wrapper">
-            <div className="detail-page">
+          <div className='detail-page-wrapper'>
+            <div className='detail-page'>
               <Video lesson={lesson} />
             </div>
-            <div className="test">
+            <div className='test'>
               <Test lesson={lesson} />
             </div>
           </div>
         </div>
       )}
+      {error && <ErrorPage />}
     </>
   );
 }
