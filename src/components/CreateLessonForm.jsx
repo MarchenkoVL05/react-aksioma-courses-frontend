@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { fetchCategories } from "../redux/slices/categorySlice";
+import axios from "../axios";
+
+import upload from "../images/upload-img.svg";
 
 function CreateLessonForm() {
   const [category, setCategory] = useState("");
@@ -24,8 +27,23 @@ function CreateLessonForm() {
   const categories = useSelector((state) => state.category.categories);
   const categoriesStatus = useSelector((state) => state.category.status);
 
-  const createLesson = (data) => {
-    console.log(data);
+  const createLesson = async (data) => {
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("content", data.content);
+    formData.append("categoryId", data.categoryId);
+    formData.append("video", data.video[0]);
+    try {
+      const response = await axios.post("/lesson", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      navigate(`/${response.data._id}`);
+    } catch (error) {
+      console.log(error);
+      alert(error.response.data.message);
+    }
   };
 
   const chooseCategory = (e) => {
@@ -76,6 +94,17 @@ function CreateLessonForm() {
           {errors?.categoryId && <span className="error-message">{errors.categoryId.message}</span>}
         </div>
       </label>
+      <div className="create-lesson-form__upload">
+        Загрузить видео
+        <img className="create-lesson-form__upload-img" src={upload} alt="" />
+        <input
+          {...register("video", {
+            required: "Выберите видео",
+          })}
+          type="file"
+        />
+      </div>
+      {errors?.video && <span className="error-message">{errors.video.message}</span>}
       <div className="create-lesson-form__btns-wrapper">
         <button onClick={() => navigate("/")} className="create-lesson-form__cancel">
           Отмена

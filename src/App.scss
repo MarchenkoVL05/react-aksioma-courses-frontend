@@ -403,6 +403,7 @@ input.input-error {
     top: 50%;
     transform: translateY(-50%);
     left: 10px;
+    height: 22px;
   }
   &__input {
     width: 450px;
@@ -951,5 +952,25 @@ input.input-error {
   &__submit {
     background: #7022c3;
     background: linear-gradient(169.69deg, #bcb0f5 2.48%, #7f6bdb 92.3%);
+  }
+  &__upload {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 24px;
+    font-weight: 300;
+    cursor: pointer;
+    position: relative;
+    input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      cursor: pointer;
+      opacity: 0;
+    }
+  }
+  &__upload-img {
+    max-height: 60px;
   }
 }
