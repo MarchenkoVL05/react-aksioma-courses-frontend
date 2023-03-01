@@ -1,21 +1,49 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 import Header from "../components/Header";
 import LessonsList from "../components/LessonsList";
 
 import { fetchLessons } from "../redux/slices/lessonSlice";
+import { searchedLesson } from "../redux/slices/lessonSlice";
+
+import axios from "../axios";
 
 function MainPage() {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.userInfo);
 
+  let [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
-    dispatch(fetchLessons());
+    if (!searchParams.get("search")) {
+      dispatch(fetchLessons());
+    }
   }, []);
 
   const lessons = useSelector((state) => state.lesson.lessons);
   const status = useSelector((state) => state.lesson.status);
+
+  useEffect(() => {
+    if (searchParams.get("search")) {
+      const searchObj = {
+        searchTitle: searchParams.get("search"),
+      };
+      axios
+        .post("/lesson/search", searchObj, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          dispatch(searchedLesson(response.data));
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
+    }
+  }, [searchParams]);
 
   return (
     <>

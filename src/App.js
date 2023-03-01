@@ -25,6 +25,7 @@ const router = createBrowserRouter([
   {
     path: "/:lessonId",
     element: <LessonPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/create",

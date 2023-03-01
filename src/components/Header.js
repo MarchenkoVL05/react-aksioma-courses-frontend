@@ -1,13 +1,26 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
 
 import logo from "../images/logo.svg";
 import loop from "../images/loop.svg";
 import profile from "../images/profile.svg";
 import create from "../images/createLesson.svg";
+import close from "../images/close.png";
 
 function Header({ userInfo }) {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  let [searchParams, setSearchParams] = useSearchParams();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const toggleModal = () => {
     setOpen(!open);
@@ -19,17 +32,34 @@ function Header({ userInfo }) {
     window.location.href = "/";
   };
 
+  const handleSearch = (data) => {
+    navigate(`/?search=${data.searchTitle}`);
+  };
+
+  const clearSearch = () => {
+    window.location.href = "/";
+  };
+
   return (
     <>
       <header className="header">
         <div className="header__left">
-          <Link className="header__link" to="/">
-            <img src={logo} alt="" />
-          </Link>
-          <div className="search">
-            <img src={loop} alt="" />
-            <input className="search__input" placeholder="Поиск" type="text" />
-          </div>
+          {searchParams.get("search") ? (
+            <img className="common-logo" onClick={() => (window.location.href = "/")} src={logo} alt="" />
+          ) : (
+            <Link className="header__link" to="/">
+              <img src={logo} alt="" />
+            </Link>
+          )}
+          <form onSubmit={handleSubmit(handleSearch)} className="search">
+            <button type="submit">
+              <img src={loop} alt="" />
+            </button>
+            <input {...register("searchTitle")} className="search__input" placeholder="Поиск..." type="text" />
+            {searchParams.get("search") && (
+              <img onClick={clearSearch} className="clean-search" src={close} alt="Очистить поиск" />
+            )}
+          </form>
           <div className="header__category">
             Отдел: <span>{userInfo.workPosition}</span>
           </div>

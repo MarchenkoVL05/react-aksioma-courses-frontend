@@ -58,7 +58,11 @@ const lessonSlice = createSlice({
     error: null,
     message: null,
   },
-  reducers: {},
+  reducers: {
+    searchedLesson(state, action) {
+      state.lessons = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // Все уроки
@@ -100,5 +104,7 @@ const lessonSlice = createSlice({
       });
   },
 });
+
+export const { searchedLesson } = lessonSlice.actions;
 
 export default lessonSlice.reducer;

@@ -402,12 +402,22 @@ input.input-error {
 
 .search {
   position: relative;
-  img {
+  button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     left: 10px;
-    height: 22px;
+    height: 28px;
+    width: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  img {
+    height: 100%;
   }
   &__input {
     width: 450px;
@@ -415,8 +425,8 @@ input.input-error {
     background: #ffffff;
     border: 1px solid #e7e7e7;
     border-radius: 5px;
-    padding: 5px 10px 5px 50px;
-    font-size: 18px;
+    padding: 5px 30px 5px 50px;
+    font-size: 16px;
     font-weight: 500;
     transition: 0.2s all;
     &:focus {
@@ -424,6 +434,22 @@ input.input-error {
       border: 1px solid #959595;
     }
   }
+}
+
+img.clean-search {
+  height: 20px;
+  padding: 3px;
+  position: absolute;
+  right: 13px;
+  top: 9px;
+  cursor: pointer;
+  box-shadow: #7f7f7f59 0px 5px 15px;
+  border-radius: 100%;
+}
+
+.common-logo {
+  height: 35px;
+  cursor: pointer;
 }
 
 .create-lesson-btn {
