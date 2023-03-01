@@ -8,6 +8,7 @@ import { fetchOneLesson } from "../redux/slices/lessonSlice.js";
 import Header from "../components/Header";
 import Video from "../components/Video.js";
 import Test from "../components/Test.jsx";
+import Loader from "../components/Loader";
 
 function LessonPage() {
   const dispatch = useDispatch();
@@ -19,18 +20,25 @@ function LessonPage() {
   }, []);
 
   const lesson = useSelector((state) => state.lesson.lesson);
+  const lessonStatus = useSelector((state) => state.lesson.lessonStatus);
 
   return (
     <>
-      <Header userInfo={userInfo} />
-      <div className="detail-page-wrapper">
-        <div className="detail-page">
-          <Video lesson={lesson} />
+      {lessonStatus == "loading" ? (
+        <Loader />
+      ) : (
+        <div>
+          <Header userInfo={userInfo} />
+          <div className="detail-page-wrapper">
+            <div className="detail-page">
+              <Video lesson={lesson} />
+            </div>
+            <div className="test">
+              <Test lesson={lesson} />
+            </div>
+          </div>
         </div>
-        <div className="test">
-          <Test lesson={lesson} />
-        </div>
-      </div>
+      )}
     </>
   );
 }

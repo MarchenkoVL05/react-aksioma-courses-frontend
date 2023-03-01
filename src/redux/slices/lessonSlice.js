@@ -54,12 +54,14 @@ const lessonSlice = createSlice({
     lessons: [],
     lesson: {},
     status: null,
+    lessonStatus: null,
     error: null,
     message: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Все уроки
       .addCase(fetchLessons.pending, (state) => {
         state.status = "loading";
       })
@@ -71,17 +73,19 @@ const lessonSlice = createSlice({
         state.status = "rejected";
         state.error = action.error.message;
       })
+      // Один урок
       .addCase(fetchOneLesson.pending, (state) => {
-        state.status = "loading";
+        state.lessonStatus = "loading";
       })
       .addCase(fetchOneLesson.fulfilled, (state, action) => {
-        state.status = "resolved";
+        state.lessonStatus = "resolved";
         state.lesson = action.payload;
       })
       .addCase(fetchOneLesson.rejected, (state, action) => {
-        state.status = "rejected";
+        state.lessonStatus = "rejected";
         state.error = action.error.message;
       })
+      // Удалить урок
       .addCase(removeLesson.pending, (state) => {
         state.status = "loading";
       })
