@@ -68,29 +68,24 @@ function LessonsList({ lessons, status, userInfo, searchError, searchStatus }) {
                   })
                 : lessons.map((lesson) => {
                     return (
-                      <Link
-                        to={`/lesson/${lesson._id}`}
-                        className="lessons__item-link-wrapper"
-                        state={status}
-                        key={lesson._id}
-                      >
-                        <div className="lessons__item">
-                          {userInfo.role == "admin" && (
-                            <button
-                              onClick={() => handleRemoveLesson(lesson._id)}
-                              className="lessons__item-remove"
-                              type="button"
-                            >
-                              <img src={remove} />
-                            </button>
-                          )}
+                      <div className="lessons__item" key={lesson._id}>
+                        {userInfo.role == "admin" && (
+                          <button
+                            onClick={() => handleRemoveLesson(lesson._id)}
+                            className="lessons__item-remove"
+                            type="button"
+                          >
+                            <img src={remove} />
+                          </button>
+                        )}
+                        <Link to={`/lesson/${lesson._id}`} className="lessons__item-link-wrapper" state={status}>
                           <img className="lessons__item-preview" src={preview} alt="" />
                           <div className="lessons__item-title">{lesson.title}</div>
                           <div className="lessons__item-content">
                             {lesson.content.length > 70 ? lesson.content.slice(0, 70) + "..." : lesson.content}
                           </div>
-                        </div>
-                      </Link>
+                        </Link>
+                      </div>
                     );
                   })}
             </div>

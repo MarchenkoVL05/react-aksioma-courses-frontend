@@ -39,7 +39,7 @@ function CreateLessonForm() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      navigate(`/${response.data._id}`);
+      navigate(`/lesson/${response.data._id}`);
     } catch (error) {
       console.log(error);
       alert(error.response.data.message);

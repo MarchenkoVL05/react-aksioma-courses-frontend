@@ -14,7 +14,7 @@ function Video({ lesson }) {
   return (
     <>
       <div className="detail-video">
-        <video width="1067" height="540" controls="controls" controlsList="nodownload" ref={videoRef}>
+        <video controls="controls" controlsList="nodownload" ref={videoRef}>
           <source src={`http://localhost:4444${lesson.videoUrl}`} type="video/ogg; codecs=theora, vorbis"></source>
           <source
             src={`http://localhost:4444${lesson.videoUrl}`}
