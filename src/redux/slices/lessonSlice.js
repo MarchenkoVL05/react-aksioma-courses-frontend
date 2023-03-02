@@ -48,6 +48,25 @@ export const removeLesson = createAsyncThunk("lesson/removeLesson", async (lesso
   }
 });
 
+export const filderByCategory = createAsyncThunk("lesson/filderByCategory", async (id) => {
+  try {
+    const categoryIdObj = {
+      categoryId: id,
+    };
+    const response = await axios.post("/lesson/filter", categoryIdObj, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    const customError = error.response ? error.response.data.message : "Network Error";
+    throw customError;
+  }
+});
+
 const lessonSlice = createSlice({
   name: "lesson",
   initialState: {
@@ -99,6 +118,18 @@ const lessonSlice = createSlice({
         state.message = action.payload.message;
       })
       .addCase(removeLesson.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.error.message;
+      })
+      // Отфильтровать уроки по категории
+      .addCase(filderByCategory.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(filderByCategory.fulfilled, (state, action) => {
+        state.status = "resolved";
+        state.lessons = action.payload;
+      })
+      .addCase(filderByCategory.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.error.message;
       });

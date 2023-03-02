@@ -1,19 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
+
+import { filderByCategory } from "../redux/slices/lessonSlice";
+import { fetchCategories } from "../redux/slices/categorySlice";
+import { fetchLessons } from "../redux/slices/lessonSlice";
 
 import logo from "../images/logo.svg";
 import loop from "../images/loop.svg";
 import profile from "../images/profile.svg";
 import create from "../images/createLesson.svg";
 import close from "../images/close.png";
+import categoryArrow from "../images/categoryArrow.svg";
 
 function Header({ userInfo }) {
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
   let [searchParams, setSearchParams] = useSearchParams();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, []);
+
+  const categories = useSelector((state) => state.category.categories);
 
   const {
     register,
@@ -43,6 +57,29 @@ function Header({ userInfo }) {
     window.location.href = "/";
   };
 
+  const openCategoriesMenu = () => {
+    setCategoriesOpen(!categoriesOpen);
+    setTimeout(() => {
+      setCategoriesOpen(false);
+    }, 5000);
+  };
+
+  const filterLessons = (categoryId) => {
+    if (userInfo.role == "admin") {
+      if (window.location.pathname == "/") {
+        dispatch(filderByCategory(categoryId));
+      } else {
+        alert("Перейдите на страницу уроков");
+      }
+    } else {
+      alert("Вы из другого отдела");
+    }
+  };
+
+  const fetchAllLessons = () => {
+    dispatch(fetchLessons());
+  };
+
   return (
     <>
       <header className="header">
@@ -63,8 +100,31 @@ function Header({ userInfo }) {
               <img onClick={clearSearch} className="clean-search" src={close} alt="Очистить поиск" />
             )}
           </form>
-          <div className="header__category">
-            Отдел: <span>{userInfo.workPosition}</span>
+          <div className="header__category-wrapper">
+            <div className="header__category" onClick={openCategoriesMenu}>
+              <img src={categoryArrow} alt="" />
+              Отдел: <span>{userInfo.workPosition}</span>
+            </div>
+            <ul className={`header__category-list ${categoriesOpen ? "header__category-list--open" : ""}`}>
+              {userInfo.role == "admin" && <li onClick={fetchAllLessons}>Все уроки</li>}
+              {categories && userInfo.role == "admin"
+                ? categories.map((category) => {
+                    return (
+                      <li key={category._id} onClick={() => filterLessons(category._id)}>
+                        {category.categoryName}
+                      </li>
+                    );
+                  })
+                : categories
+                    .filter((category) => category.categoryName != userInfo.workPosition)
+                    .map((category) => {
+                      return (
+                        <li key={category._id} onClick={() => filterLessons(category._id)}>
+                          {category.categoryName}
+                        </li>
+                      );
+                    })}
+            </ul>
           </div>
         </div>
         <div className="header__btns-wrapper">
