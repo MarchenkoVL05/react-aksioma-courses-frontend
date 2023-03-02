@@ -9,13 +9,12 @@ import { removeLesson } from "../redux/slices/lessonSlice";
 import preview from "../images/video-preview.png";
 import remove from "../images/removeLesson.svg";
 
-function LessonsList({ lessons, status, searchError, searchStatus }) {
+function LessonsList({ lessons, status, userInfo, searchError, searchStatus }) {
   const [isRemoveClicked, setIsRemoveClicked] = useState(false);
 
   const dispatch = useDispatch();
   const warningRef = useRef();
 
-  const userInfo = useSelector((state) => state.user.userInfo);
   const removeError = useSelector((state) => state.lesson.error);
   const message = useSelector((state) => state.lesson.message);
 
@@ -71,8 +70,7 @@ function LessonsList({ lessons, status, searchError, searchStatus }) {
                     return (
                       <Link
                         to={`/lesson/${lesson._id}`}
-                        className="lessons__item-link-wrapper
-                  "
+                        className="lessons__item-link-wrapper"
                         state={status}
                         key={lesson._id}
                       >

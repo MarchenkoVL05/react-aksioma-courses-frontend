@@ -56,7 +56,13 @@ function MainPage() {
   return (
     <>
       <Header userInfo={userInfo} />
-      <LessonsList lessons={lessons} status={status} searchError={searchError} searchStatus={searchStatus} />
+      <LessonsList
+        lessons={lessons}
+        userInfo={userInfo}
+        status={status}
+        searchError={searchError}
+        searchStatus={searchStatus}
+      />
     </>
   );
 }
