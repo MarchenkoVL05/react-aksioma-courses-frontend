@@ -9,7 +9,7 @@ import { removeLesson } from "../redux/slices/lessonSlice";
 import preview from "../images/video-preview.png";
 import remove from "../images/removeLesson.svg";
 
-function LessonsList({ lessons, status, searchError }) {
+function LessonsList({ lessons, status, searchError, searchStatus }) {
   const [isRemoveClicked, setIsRemoveClicked] = useState(false);
 
   const dispatch = useDispatch();
@@ -48,7 +48,11 @@ function LessonsList({ lessons, status, searchError }) {
 
   return (
     <>
-      {searchError ? (
+      {searchStatus == "loading" ? (
+        <section className="lessons">
+          <h1 className="lessons__not-found">Ищем уроки...</h1>
+        </section>
+      ) : searchError ? (
         <section className="lessons">
           <h1 className="lessons__not-found">Такой урок не найден</h1>
         </section>

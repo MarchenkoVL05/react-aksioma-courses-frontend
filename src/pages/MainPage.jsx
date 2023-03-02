@@ -12,6 +12,7 @@ import axios from "../axios";
 
 function MainPage() {
   const [searchError, setSearchError] = useState(null);
+  const [searchStatus, setSearchStatus] = useState(null);
 
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -29,6 +30,8 @@ function MainPage() {
 
   useEffect(() => {
     if (searchParams.get("search")) {
+      dispatch(searchedLesson([]));
+      setSearchStatus("loading");
       const searchObj = {
         searchTitle: searchParams.get("search"),
       };
@@ -41,9 +44,11 @@ function MainPage() {
         .then((response) => {
           dispatch(searchedLesson(response.data));
           setSearchError(false);
+          setSearchStatus("resolved");
         })
         .catch((error) => {
           setSearchError(true);
+          setSearchStatus("rejected");
         });
     }
   }, [searchParams]);
@@ -51,7 +56,7 @@ function MainPage() {
   return (
     <>
       <Header userInfo={userInfo} />
-      <LessonsList lessons={lessons} status={status} searchError={searchError} />
+      <LessonsList lessons={lessons} status={status} searchError={searchError} searchStatus={searchStatus} />
     </>
   );
 }
