@@ -485,10 +485,13 @@ img.clean-search {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 30px;
   }
+  &__item-link-wrapper {
+    min-height: 320px;
+  }
   &__item {
     position: relative;
     width: 390px;
-    min-height: 320px;
+    height: 100%;
     padding: 0 0 25px;
     background-color: white;
     background: #ffffff;

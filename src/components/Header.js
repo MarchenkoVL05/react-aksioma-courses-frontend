@@ -11,10 +11,9 @@ import create from "../images/createLesson.svg";
 import close from "../images/close.png";
 
 function Header({ userInfo }) {
+  let [searchParams, setSearchParams] = useSearchParams();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-
-  let [searchParams, setSearchParams] = useSearchParams();
 
   const {
     register,
@@ -33,7 +32,11 @@ function Header({ userInfo }) {
   };
 
   const handleSearch = (data) => {
-    navigate(`/?search=${data.searchTitle}`);
+    if (data.searchTitle === "") {
+      window.location.href = "/";
+    } else {
+      navigate(`/?search=${data.searchTitle}`);
+    }
   };
 
   const clearSearch = () => {

@@ -11,6 +11,8 @@ import { searchedLesson } from "../redux/slices/lessonSlice";
 import axios from "../axios";
 
 function MainPage() {
+  const [searchError, setSearchError] = useState(null);
+
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.userInfo);
 
@@ -38,9 +40,10 @@ function MainPage() {
         })
         .then((response) => {
           dispatch(searchedLesson(response.data));
+          setSearchError(false);
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          setSearchError(true);
         });
     }
   }, [searchParams]);
@@ -48,7 +51,7 @@ function MainPage() {
   return (
     <>
       <Header userInfo={userInfo} />
-      <LessonsList lessons={lessons} status={status} />
+      <LessonsList lessons={lessons} status={status} searchError={searchError} />
     </>
   );
 }
