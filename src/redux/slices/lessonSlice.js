@@ -58,8 +58,6 @@ export const filderByCategory = createAsyncThunk("lesson/filderByCategory", asyn
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-
-    console.log(response);
     return response.data;
   } catch (error) {
     const customError = error.response ? error.response.data.message : "Network Error";
@@ -116,6 +114,7 @@ const lessonSlice = createSlice({
         state.status = "resolved";
         state.lessons = state.lessons.filter((lesson) => lesson._id !== action.payload.removedLesson._id);
         state.message = action.payload.message;
+        state.error = null;
       })
       .addCase(removeLesson.rejected, (state, action) => {
         state.status = "rejected";
