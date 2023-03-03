@@ -43,10 +43,11 @@ a {
   left: 50%;
   transform: translateX(-50%);
   top: -70px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: white;
-  padding: 20px;
+  box-shadow: #767a77e2 2px 2px 4px;
+  padding: 15px;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -55,15 +56,13 @@ a {
   &--error {
     background: #dd1f1f;
     background: linear-gradient(34deg, #dd1f1f 35%, #ff4400 100%);
-    box-shadow: #dd1f1fa6 2px 2px 4px;
     visibility: visible;
     opacity: 1;
     top: 0;
   }
   &--success {
-    background: rgb(10, 208, 86);
-    background: linear-gradient(175deg, rgba(10, 208, 86, 1) 0%, rgba(43, 112, 40, 1) 100%);
-    box-shadow: rgb(10, 208, 86) 2px 2px 4px;
+    background: #0ad056;
+    background: linear-gradient(175deg, #0ad056 0%, #2b7028 100%);
     visibility: visible;
     opacity: 1;
     top: 0;
