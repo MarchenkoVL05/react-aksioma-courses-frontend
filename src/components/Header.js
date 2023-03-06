@@ -15,6 +15,7 @@ import profile from "../images/profile.svg";
 import create from "../images/createLesson.svg";
 import close from "../images/close.png";
 import categoryArrow from "../images/categoryArrow.svg";
+import addCategory from "../images/addCategory.png";
 
 function Header({ userInfo }) {
   const [categoriesOpen, setCategoriesOpen] = useState(false);
@@ -61,7 +62,7 @@ function Header({ userInfo }) {
     setCategoriesOpen(!categoriesOpen);
     setTimeout(() => {
       setCategoriesOpen(false);
-    }, 5000);
+    }, 10000);
   };
 
   const filterLessons = (categoryId) => {
@@ -126,6 +127,11 @@ function Header({ userInfo }) {
                     })}
             </ul>
           </div>
+          {userInfo.role == "admin" && (
+            <Link className="add-category-link" to="/category">
+              <img src={addCategory} alt="" />
+            </Link>
+          )}
         </div>
         <div className="header__btns-wrapper">
           {userInfo.role == "admin" && (

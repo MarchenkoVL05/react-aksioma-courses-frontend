@@ -5,6 +5,7 @@ import ErrorPage from "./pages/ErrorPage";
 import AuthPage from "./pages/AuthPage";
 import LessonPage from "./pages/LessonPage";
 import CreatePage from "./pages/CreatePage";
+import CategoryPage from "./pages/CategoryPage";
 
 import "./App.scss";
 
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/create",
     element: <CreatePage />,
+  },
+  {
+    path: "/category",
+    element: <CategoryPage />,
   },
 ]);
 
