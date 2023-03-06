@@ -48,6 +48,7 @@ function Video({ lesson }) {
         </div>
         <div className="detail-video__content">
           <h1 className="detail-video__title">{lesson.title}</h1>
+          <div className="detail-video__department">{lesson.categoryId.categoryName}</div>
           <p className="detail-video__descr">{lesson.content}</p>
           <button onClick={() => navigate("/")} className="detail-video__back">
             Вернуться к списку уроков
