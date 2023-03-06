@@ -27,7 +27,7 @@ function LessonPage() {
   return (
     <>
       {lessonStatus === "loading" && !error && <Loader />}
-      {lessonStatus !== "loading" && !error && lesson && (
+      {lessonStatus !== "loading" && !error && Object.keys(lesson).length !== 0 && (
         <div>
           <Header userInfo={userInfo} />
           <div className="detail-page-wrapper">
