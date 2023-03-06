@@ -471,7 +471,7 @@ input.input-error {
     cursor: pointer;
   }
   img {
-    height: 100%;
+    height: 85%;
   }
   &__input {
     width: 450px;
@@ -1089,6 +1089,11 @@ img.clean-search {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  &__title {
+    font-weight: 600;
+    font-size: 22px;
+    color: #484848;
+  }
   ul {
     display: flex;
     flex-direction: column;

@@ -53,7 +53,7 @@ function CreateLessonForm() {
   return (
     <form onSubmit={handleSubmit(createLesson)} className="create-lesson-form">
       <label>
-        Название урока
+        Название урока:
         <input
           {...register("title", {
             required: "Название должно быть заполнено",
@@ -66,7 +66,7 @@ function CreateLessonForm() {
         {errors?.title && <span className="error-message">{errors.title.message}</span>}
       </label>
       <label>
-        Описание
+        Описание:
         <textarea
           {...register("content", {
             required: "Описание должно быть заполнено",
@@ -78,7 +78,7 @@ function CreateLessonForm() {
         {errors?.content && <span className="error-message">{errors.content.message}</span>}
       </label>
       <label>
-        Отдел
+        Отдел:
         <div className={errors?.categoryId ? "select-wrapper--appearance" : "select-wrapper--create-form"}>
           <select onChange={chooseCategory} {...register("categoryId", { required: "Выберите отдел" })}>
             {categoriesStatus == "loading" && <option>Загрузка...</option>}

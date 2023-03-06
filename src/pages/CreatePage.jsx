@@ -1,4 +1,5 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 
 import Header from "../components/Header";
 import CreateLessonForm from "../components/CreateLessonForm";
@@ -9,10 +10,16 @@ function CreatePage() {
   const userInfo = useAuth();
   return (
     <>
-      <Header userInfo={userInfo} />
-      <div className="create-form-wrapper">
-        <CreateLessonForm />
-      </div>
+      {userInfo.role == "admin" ? (
+        <div>
+          <Header userInfo={userInfo} />
+          <div className="create-form-wrapper">
+            <CreateLessonForm />
+          </div>
+        </div>
+      ) : (
+        <Navigate to="/" />
+      )}
     </>
   );
 }

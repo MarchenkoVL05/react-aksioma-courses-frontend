@@ -39,6 +39,7 @@ function CategoriesList({ setError, setSuccess }) {
 
   return (
     <div className="categories-list">
+      <h2 className="categories-list__title">Созданные отделы (категории):</h2>
       <ul>
         {categories.map((category) => {
           return (
