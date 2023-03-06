@@ -447,6 +447,10 @@ input.input-error {
   align-items: center;
   img {
     height: 30px;
+    transition: 0.7s all;
+    &:hover {
+      transform: rotate(45deg);
+    }
   }
 }
 

@@ -1,20 +1,16 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-
+import { useDispatch } from "react-redux";
 import { fetchCategories } from "../redux/slices/categorySlice";
+
+import CategoriesList from "./CategoriesList";
 
 import axios from "../axios";
 
-import removeCategoryImg from "../images/removeCategory.png";
-
 function CreateCategoryForm() {
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
-
-  const [success, setSuccess] = useState(false);
-  const [successMessage, setSuccessMessage] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,11 +27,10 @@ function CreateCategoryForm() {
 
   useEffect(() => {
     setTimeout(() => {
-      setError(false);
+      setError(null);
+      setSuccess(null);
     }, 4000);
-  }, [error]);
-
-  const categories = useSelector((state) => state.category.categories);
+  }, [error, success]);
 
   const handleCreateCategory = async (data) => {
     try {
@@ -44,50 +39,17 @@ function CreateCategoryForm() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      setSuccess(true);
-      setSuccessMessage("Отдел успешно создан");
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
+      setSuccess("Отдел успешно создан");
     } catch (error) {
-      setError(true);
-      setErrorMessage(error.response.data.message);
-    }
-  };
-
-  const handleRemoveCategory = async (id) => {
-    try {
-      const confirmRemoving = window.confirm("Вы хотите удалить отдел и все уроки в нём?");
-      if (confirmRemoving) {
-        const removingCategoryObj = {
-          id: id,
-        };
-
-        await axios.delete("/category", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          data: removingCategoryObj,
-        });
-        setSuccess(true);
-        setSuccessMessage("Отдел, уроки и вопросы к ним удалены");
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
-      } else {
-        return;
-      }
-    } catch (error) {
-      setError(true);
-      setErrorMessage(error.response.data.message);
+      setError(error.response.data.message);
     }
   };
 
   return (
     <>
       <div className="wrapper">
-        <div className={`warning ${error && "warning--error"}`}>{errorMessage}</div>
-        <div className={`warning ${success && "warning--success"}`}>{successMessage}</div>
+        <div className={`warning ${error && "warning--error"}`}>{error}</div>
+        <div className={`warning ${success && "warning--success"}`}>{success}</div>
         <form onSubmit={handleSubmit(handleCreateCategory)} className="create-lesson-form">
           <label>
             Создание нового отдела
@@ -117,19 +79,7 @@ function CreateCategoryForm() {
             </button>
           </div>
         </form>
-        <div className="categories-list">
-          <ul>
-            {console.log(categories)}
-            {categories.map((category) => {
-              return (
-                <li key={category._id}>
-                  {category.categoryName}{" "}
-                  <img onClick={() => handleRemoveCategory(category._id)} src={removeCategoryImg} alt="" />
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        <CategoriesList setError={setError} setSuccess={setSuccess} />
       </div>
     </>
   );
