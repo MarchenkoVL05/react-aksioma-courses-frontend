@@ -557,6 +557,9 @@ img.clean-search {
       box-shadow: #00000059 0px 7px 10px;
       transform: translateY(-7px);
       cursor: pointer;
+      img {
+        opacity: 1;
+      }
     }
     img {
       border-radius: 13px 13px 0 0;
@@ -564,6 +567,8 @@ img.clean-search {
       max-height: 220px;
       object-fit: fill;
       transition: 0.4s all;
+      opacity: 0.97;
+      transition: 0.5s all;
     }
   }
   &__item-duration {
@@ -816,6 +821,9 @@ img.clean-search {
   }
   &__question {
     width: calc(50% - 40px);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: #32325d40 0px 50px 100px -20px, #0000004d 0px 30px 60px -30px, #0a254059 0px -2px 6px 0px inset;
   }
   &__question-title {
     font-weight: 600;

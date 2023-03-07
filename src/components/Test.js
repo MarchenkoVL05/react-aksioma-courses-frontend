@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { passTest } from "../redux/slices/questionSlice";
@@ -30,6 +30,10 @@ function Test({ lesson }) {
 
   const testResult = useSelector((state) => state.question.result);
 
+  useEffect(() => {
+    console.log(testResult);
+  });
+
   return (
     <div className="test">
       <h4 className="test__title">Проверка знаний</h4>
@@ -45,7 +49,7 @@ function Test({ lesson }) {
                       <label className="test__question-label b-contain" key={option._id}>
                         <input
                           className="test__question-input"
-                          name={question._id}
+                          name={question.inputType == "checkbox" ? question._id + String(Math.random()) : question._id}
                           type={question.inputType}
                           value={option._id}
                         />
