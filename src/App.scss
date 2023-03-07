@@ -566,6 +566,18 @@ img.clean-search {
       transition: 0.4s all;
     }
   }
+  &__item-duration {
+    position: absolute;
+    top: 180px;
+    right: 10px;
+    background: #ffffff;
+    opacity: 0.8;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-weight: 700;
+    font-size: 16px;
+    color: #000000;
+  }
   &__item-title {
     padding: 0 13px;
     margin-top: 20px;
@@ -713,8 +725,8 @@ img.clean-search {
     max-width: 215px;
     margin-top: 17px;
     font-weight: 500;
-    font-size: 23px;
-    line-height: 30px;
+    font-size: 28px;
+    line-height: 35px;
     color: #ffffff;
   }
   &__workPosition {

@@ -42,7 +42,6 @@ function Video({ lesson }) {
 
   return (
     <>
-      {console.log(lesson)}
       <div className="detail-video">
         <div className="detail-video__container">
           <Plyr {...plyrProps} />

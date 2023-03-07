@@ -18,6 +18,17 @@ function LessonCard({ userInfo, lesson, setIsRemoveClicked }) {
     }
   };
 
+  function toDateTime(seconds) {
+    let hours = Math.floor(seconds / 3600);
+    let minutes = Math.floor((seconds % 3600) / 60);
+    let remainingSeconds = seconds % 60;
+
+    let timeString = `${hours}:${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
+    return timeString;
+  }
+
+  toDateTime(11159);
+
   return (
     <div className="lessons__item" key={lesson._id}>
       {userInfo.role == "admin" && (
@@ -31,6 +42,7 @@ function LessonCard({ userInfo, lesson, setIsRemoveClicked }) {
           src={lesson.thumbnail ? `http://localhost:4444${lesson.thumbnail}` : preview}
           alt=""
         />
+        <div className="lessons__item-duration">{toDateTime(lesson.duration)}</div>
         <div className="lessons__item-title">{lesson.title}</div>
         <div className="lessons__item-content">
           {lesson.content.length > 70 ? lesson.content.slice(0, 70) + "..." : lesson.content}
