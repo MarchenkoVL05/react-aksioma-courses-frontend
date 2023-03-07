@@ -26,7 +26,11 @@ function LessonCard({ userInfo, lesson, setIsRemoveClicked }) {
         </button>
       )}
       <Link to={`/lesson/${lesson._id}`} className="lessons__item-link-wrapper">
-        <img className="lessons__item-preview" src={preview} alt="" />
+        <img
+          className="lessons__item-preview"
+          src={lesson.thumbnail ? `http://localhost:4444${lesson.thumbnail}` : preview}
+          alt=""
+        />
         <div className="lessons__item-title">{lesson.title}</div>
         <div className="lessons__item-content">
           {lesson.content.length > 70 ? lesson.content.slice(0, 70) + "..." : lesson.content}

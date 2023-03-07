@@ -51,7 +51,14 @@ function LessonsList({ lessons, status, userInfo, searchError, searchStatus }) {
                     return <LessonLoader key={index} />;
                   })
                 : lessons.map((lesson) => {
-                    return <LessonCard userInfo={userInfo} lesson={lesson} setIsRemoveClicked={setIsRemoveClicked} />;
+                    return (
+                      <LessonCard
+                        userInfo={userInfo}
+                        lesson={lesson}
+                        setIsRemoveClicked={setIsRemoveClicked}
+                        key={lesson._id}
+                      />
+                    );
                   })}
             </div>
           </div>

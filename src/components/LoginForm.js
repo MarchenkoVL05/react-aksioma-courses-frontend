@@ -60,7 +60,7 @@ function LoginForm() {
               Войти
             </button>
             <p>
-              Нету аккаунта?{" "}
+              Нет аккаунта?{" "}
               <Link to="/register" className="auth-link-register">
                 Создайте его сейчас
               </Link>
