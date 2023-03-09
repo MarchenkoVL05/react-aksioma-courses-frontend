@@ -21,6 +21,7 @@ function LessonPage() {
   }, []);
 
   const lesson = useSelector((state) => state.lesson.lesson);
+  const lessonQuestions = useSelector((state) => state.lesson.questions);
   const lessonStatus = useSelector((state) => state.lesson.lessonStatus);
   const error = useSelector((state) => state.lesson.error);
 
@@ -35,7 +36,7 @@ function LessonPage() {
               <Video lesson={lesson} />
             </div>
             <div className="test">
-              <Test lesson={lesson} />
+              <Test lesson={lesson} questions={lessonQuestions} userInfo={userInfo} />
             </div>
           </div>
         </div>

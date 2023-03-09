@@ -65,11 +65,24 @@ export const filderByCategory = createAsyncThunk("lesson/filderByCategory", asyn
   }
 });
 
+export const removeQuestion = createAsyncThunk("lesson/removeQuestion", async (questionId) => {
+  const response = await axios.delete("/question", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    data: {
+      id: questionId,
+    },
+  });
+  return response.data;
+});
+
 const lessonSlice = createSlice({
   name: "lesson",
   initialState: {
     lessons: [],
     lesson: {},
+    questions: [],
     status: null,
     lessonStatus: null,
     error: null,
@@ -101,6 +114,7 @@ const lessonSlice = createSlice({
       .addCase(fetchOneLesson.fulfilled, (state, action) => {
         state.lessonStatus = "resolved";
         state.lesson = action.payload;
+        state.questions = action.payload.questions;
       })
       .addCase(fetchOneLesson.rejected, (state, action) => {
         state.lessonStatus = "rejected";
@@ -131,6 +145,10 @@ const lessonSlice = createSlice({
       .addCase(filderByCategory.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.error.message;
+      })
+      // Удалить вопрос из урока
+      .addCase(removeQuestion.fulfilled, (state, action) => {
+        state.questions = state.questions.filter((question) => question._id !== action.payload.removedQuestion._id);
       });
   },
 });
