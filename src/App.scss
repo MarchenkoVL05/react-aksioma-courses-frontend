@@ -75,6 +75,10 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  &--auto {
+    width: auto;
+    height: auto;
+  }
 }
 
 .errorBox {

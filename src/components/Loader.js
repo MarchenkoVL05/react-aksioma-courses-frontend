@@ -3,9 +3,9 @@ import { ProgressBar } from "react-loader-spinner";
 
 // #a38ffd - main color
 
-function Loader() {
+function Loader({ auto }) {
   return (
-    <div className="loader">
+    <div className={auto ? "loader loader--auto" : "loader"}>
       <ProgressBar
         height="120"
         width="120"
