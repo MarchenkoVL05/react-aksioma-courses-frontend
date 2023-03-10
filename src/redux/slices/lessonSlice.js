@@ -92,14 +92,34 @@ export const addQuestion = createAsyncThunk("lesson/addQuestion", async (data) =
   }
 });
 
+export const passTest = createAsyncThunk("result/passTest", async (testResult) => {
+  try {
+    const testResultObject = {
+      answers: testResult.result,
+    };
+    const response = await axios.post(`/result/${testResult.lessonId}`, testResultObject, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    const customError = error.response ? error.response.data.message : "Network Error";
+    throw customError;
+  }
+});
+
 const lessonSlice = createSlice({
   name: "lesson",
   initialState: {
     lessons: [],
+    // lesson = Текущий открытый урок
     lesson: {},
     questions: [],
+    result: {},
     status: null,
     lessonStatus: null,
+    resultStatus: null,
     error: null,
     message: null,
   },
@@ -125,6 +145,7 @@ const lessonSlice = createSlice({
       // Один урок
       .addCase(fetchOneLesson.pending, (state) => {
         state.lessonStatus = "loading";
+        state.result = {};
       })
       .addCase(fetchOneLesson.fulfilled, (state, action) => {
         state.lessonStatus = "resolved";
@@ -168,6 +189,19 @@ const lessonSlice = createSlice({
       // Создать вопрос
       .addCase(addQuestion.fulfilled, (state, action) => {
         state.questions.push(action.payload.question);
+      })
+      // Сдать тест
+      .addCase(passTest.pending, (state) => {
+        state.resultStatus = "loading";
+        state.error = null;
+      })
+      .addCase(passTest.fulfilled, (state, action) => {
+        state.resultStatus = "resolved";
+        state.result = action.payload;
+      })
+      .addCase(passTest.rejected, (state, action) => {
+        state.resultStatus = "rejected";
+        state.error = action.error.message;
       });
   },
 });

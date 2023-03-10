@@ -1,10 +1,10 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { passTest } from "../redux/slices/resultSlice";
+import { passTest } from "../redux/slices/lessonSlice";
 import { removeQuestion } from "../redux/slices/lessonSlice";
 
 import Loader from "./Loader";
+import ResultChart from "./ResultChart";
 
 import remove from "../images/removeLesson.svg";
 
@@ -37,18 +37,15 @@ function QuestionsList({ userInfo, questions, lesson }) {
     dispatch(removeQuestion(questionId));
   };
 
-  const passingTestStatus = useSelector((state) => state.result.status);
-
-  const testResult = useSelector((state) => state.result.result);
-
-  useEffect(() => {
-    console.log(testResult);
-  }, [testResult]);
+  const passingTestStatus = useSelector((state) => state.lesson.resultStatus);
+  const testResult = useSelector((state) => state.lesson.result);
 
   return (
     <form className="test__box" onSubmit={submitTestResult}>
       {passingTestStatus == "loading" ? (
         <Loader auto={true} />
+      ) : Object.keys(testResult).length !== 0 ? (
+        <ResultChart result={testResult} />
       ) : (
         <ul className="test__questions">
           {questions &&
@@ -82,12 +79,14 @@ function QuestionsList({ userInfo, questions, lesson }) {
             })}
         </ul>
       )}
-      <button
-        className={`test__btn ${questions.length == 0 ? "test__btn--disable" : ""}`}
-        disabled={questions.length == 0 ? true : false}
-      >
-        Завершить
-      </button>
+      {Object.keys(testResult).length == 0 && passingTestStatus !== "loading" && (
+        <button
+          className={`test__btn ${questions.length == 0 ? "test__btn--disable" : ""}`}
+          disabled={questions.length == 0 ? true : false}
+        >
+          Завершить
+        </button>
+      )}
     </form>
   );
 }
