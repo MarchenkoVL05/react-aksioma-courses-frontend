@@ -5,7 +5,7 @@ import { getAllUsers } from "../redux/slices/userSlice";
 import { approveUser } from "../redux/slices/userSlice";
 import { removeUser } from "../redux/slices/userSlice";
 
-import Loader from "../components/Loader";
+import Loader from "./Loader";
 
 import noImg from "../images/no-entry.png";
 import yesImg from "../images/yes.png";
