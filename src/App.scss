@@ -451,9 +451,9 @@ input.input-error {
   align-items: center;
   img {
     height: 30px;
-    transition: 0.7s all;
+    transition: 0.4s all;
     &:hover {
-      transform: rotate(45deg);
+      transform: translateY(-5px);
     }
   }
 }
