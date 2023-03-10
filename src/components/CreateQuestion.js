@@ -41,7 +41,7 @@ function CreateQuestion({ setCreate, lesson }) {
   return (
     <form className="test__box create-q" onSubmit={handleSubmit}>
       <label>
-        Введите вопрос
+        Введите вопрос &#9998;
         <input
           placeholder="В чём смысл жизни?"
           type="text"
@@ -50,7 +50,7 @@ function CreateQuestion({ setCreate, lesson }) {
         />
       </label>
       <label>
-        Тип вопроса
+        Тип вопроса &#8595;
         <select value={inputType} onChange={(e) => setInputType(e.target.value)}>
           <option value="radio">Выбрать один ответ</option>
           <option value="checkbox">Выбрать несколько ответов</option>
