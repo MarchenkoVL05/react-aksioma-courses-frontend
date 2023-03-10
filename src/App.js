@@ -6,6 +6,7 @@ import AuthPage from "./pages/AuthPage";
 import LessonPage from "./pages/LessonPage";
 import CreatePage from "./pages/CreatePage";
 import CategoryPage from "./pages/CategoryPage";
+import UserPage from "./pages/UserPage";
 
 import "./App.scss";
 
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/category",
     element: <CategoryPage />,
+  },
+  {
+    path: "/users",
+    element: <UserPage />,
   },
 ]);
 

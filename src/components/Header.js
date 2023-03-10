@@ -8,6 +8,7 @@ import UserInfo from "./UserInfo";
 import profile from "../images/profile.svg";
 import create from "../images/createLesson.svg";
 import addCategory from "../images/addCategory.png";
+import usersImg from "../images/usersPanel.png";
 
 function Header({ userInfo }) {
   const [open, setOpen] = useState(false);
@@ -23,9 +24,14 @@ function Header({ userInfo }) {
           <SearchInput />
           <CategorySelect userInfo={userInfo} />
           {userInfo.role == "admin" && (
-            <Link className="add-category-link" to="/category">
-              <img src={addCategory} alt="" />
-            </Link>
+            <>
+              <Link className="add-category-link" to="/category">
+                <img src={addCategory} alt="" />
+              </Link>
+              <Link className="add-category-link add-category-link--users" to="/users">
+                <img src={usersImg} alt="" />
+              </Link>
+            </>
           )}
         </div>
         <div className="header__btns-wrapper">
