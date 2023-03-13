@@ -3,7 +3,8 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 const ResultChart = ({ result }) => {
-  const useScore = (result.score / result.questionCounter) * 100;
+  let useScore = (result.score / result.questionCounter) * 100;
+  useScore = useScore.toFixed(2);
 
   return (
     <div className="result-container">
