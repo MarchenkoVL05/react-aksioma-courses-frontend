@@ -35,9 +35,7 @@ function LessonPage() {
             <div className="detail-page">
               <Video lesson={lesson} />
             </div>
-            <div className="test">
-              <Test lesson={lesson} questions={lessonQuestions} userInfo={userInfo} />
-            </div>
+            <Test lesson={lesson} questions={lessonQuestions} userInfo={userInfo} />
           </div>
         </div>
       )}
