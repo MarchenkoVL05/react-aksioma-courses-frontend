@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../redux/slices/userSlice";
 import { approveUser } from "../redux/slices/userSlice";
 import { removeUser } from "../redux/slices/userSlice";
+import { blockUser } from "../redux/slices/userSlice";
 
 import Loader from "./Loader";
 
@@ -32,6 +33,10 @@ function UsersPanel() {
 
   const handleRemoveUser = (id) => {
     dispatch(removeUser(id));
+  };
+
+  const handleBlockUser = (id) => {
+    dispatch(blockUser(id));
   };
 
   return (
@@ -64,7 +69,9 @@ function UsersPanel() {
                           <button onClick={() => handleApproveUser(user._id)} className="actions__btn">
                             Допустить
                           </button>
-                          <button className="actions__btn">Закрыть доступ</button>
+                          <button onClick={() => handleBlockUser(user._id)} className="actions__btn">
+                            Закрыть доступ
+                          </button>
                           <button onClick={() => handleRemoveUser(user._id)} className="actions__btn">
                             Удалить
                           </button>

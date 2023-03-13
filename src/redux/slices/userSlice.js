@@ -73,6 +73,26 @@ export const approveUser = createAsyncThunk("user/approveUser", async (id) => {
   }
 });
 
+export const blockUser = createAsyncThunk("user/blockUser", async (id) => {
+  try {
+    const response = await axios.post(
+      "/user/block",
+      {
+        userId: id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return response.data.approvedUser;
+  } catch (error) {
+    const customError = error.response ? error.response.data.message : "Network Error";
+    throw customError;
+  }
+});
+
 export const removeUser = createAsyncThunk("user/removeUser", async (id) => {
   try {
     const response = await axios.delete("/user/remove", {
@@ -164,6 +184,20 @@ const userSlice = createSlice({
         state.usersStatus = "loading";
       })
       .addCase(approveUser.fulfilled, (state, action) => {
+        const updatedUser = action.payload;
+        state.users = state.users.map((user) => {
+          if (user._id === updatedUser._id) {
+            user = updatedUser;
+          }
+          return user;
+        });
+        state.usersStatus = "resolved";
+      })
+      // Закрыть доступ ученику
+      .addCase(blockUser.pending, (state, action) => {
+        state.usersStatus = "loading";
+      })
+      .addCase(blockUser.fulfilled, (state, action) => {
         const updatedUser = action.payload;
         state.users = state.users.map((user) => {
           if (user._id === updatedUser._id) {
