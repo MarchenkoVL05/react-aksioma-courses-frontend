@@ -109,6 +109,26 @@ export const removeUser = createAsyncThunk("user/removeUser", async (id) => {
   }
 });
 
+export const makeAdmin = createAsyncThunk("user/makeAdmin", async (id) => {
+  try {
+    const response = await axios.post(
+      "/user/role",
+      {
+        userId: id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return response.data.changedUser;
+  } catch (error) {
+    const customError = error.response ? error.response.data.message : "Network Error";
+    throw customError;
+  }
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -198,6 +218,20 @@ const userSlice = createSlice({
         state.usersStatus = "loading";
       })
       .addCase(blockUser.fulfilled, (state, action) => {
+        const updatedUser = action.payload;
+        state.users = state.users.map((user) => {
+          if (user._id === updatedUser._id) {
+            user = updatedUser;
+          }
+          return user;
+        });
+        state.usersStatus = "resolved";
+      })
+      // Сделать администратором
+      .addCase(makeAdmin.pending, (state, action) => {
+        state.usersStatus = "loading";
+      })
+      .addCase(makeAdmin.fulfilled, (state, action) => {
         const updatedUser = action.payload;
         state.users = state.users.map((user) => {
           if (user._id === updatedUser._id) {

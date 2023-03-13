@@ -5,6 +5,7 @@ import { getAllUsers } from "../redux/slices/userSlice";
 import { approveUser } from "../redux/slices/userSlice";
 import { removeUser } from "../redux/slices/userSlice";
 import { blockUser } from "../redux/slices/userSlice";
+import { makeAdmin } from "../redux/slices/userSlice";
 
 import Loader from "./Loader";
 
@@ -37,6 +38,10 @@ function UsersPanel() {
 
   const handleBlockUser = (id) => {
     dispatch(blockUser(id));
+  };
+
+  const handleMakeAdmin = (id) => {
+    dispatch(makeAdmin(id));
   };
 
   return (
@@ -75,7 +80,9 @@ function UsersPanel() {
                           <button onClick={() => handleRemoveUser(user._id)} className="actions__btn">
                             Удалить
                           </button>
-                          <button className="actions__btn">Сделать администратором</button>
+                          <button onClick={() => handleMakeAdmin(user._id)} className="actions__btn">
+                            Сделать администратором
+                          </button>
                         </div>
                       )}
                     </div>
