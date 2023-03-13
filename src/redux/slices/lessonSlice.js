@@ -116,6 +116,7 @@ const lessonSlice = createSlice({
     // lesson = Текущий открытый урок
     lesson: {},
     questions: [],
+    // Результат ученика за текущий урок
     result: {},
     status: null,
     lessonStatus: null,
