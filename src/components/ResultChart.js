@@ -4,7 +4,14 @@ import "react-circular-progressbar/dist/styles.css";
 
 const ResultChart = ({ result }) => {
   let useScore = (result.score / result.questionCounter) * 100;
-  useScore = useScore.toFixed(2);
+
+  function formatNumber(num) {
+    if (Number.isInteger(num)) {
+      return num;
+    } else {
+      return num.toFixed(1);
+    }
+  }
 
   return (
     <div className="result-container">
@@ -12,8 +19,8 @@ const ResultChart = ({ result }) => {
       <div className="chart-container">
         <div className="chart-background" />
         <CircularProgressbar
-          value={useScore}
-          text={`${useScore}%`}
+          value={formatNumber(useScore)}
+          text={`${formatNumber(useScore)}%`}
           strokeWidth={10}
           styles={buildStyles({
             strokeLinecap: "butt",

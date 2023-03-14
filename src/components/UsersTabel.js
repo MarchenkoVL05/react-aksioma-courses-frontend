@@ -62,7 +62,7 @@ function UsersTabel() {
               <div className="users-panel__head">Допусчен &#8595;</div>
               <div className="users-panel__head">Действие &#8595;</div>
             </div>
-            <div className={`users-panel__info ${tabelOpen ? "users-panel__info--hide" : ""}`}>
+            <div className={`users-panel__info ${tabelOpen ? "" : "users-panel__info--hide"}`}>
               {users.map((user) => {
                 return (
                   <Fragment key={user._id}>
@@ -98,7 +98,7 @@ function UsersTabel() {
           </>
         )}
       </div>
-      {tabelOpen && <p className="users-panel__p">Нажмите, чтобы развернуть таблицу*</p>}
+      {!tabelOpen && <p className="users-panel__p">Нажмите, чтобы развернуть таблицу*</p>}
     </>
   );
 }

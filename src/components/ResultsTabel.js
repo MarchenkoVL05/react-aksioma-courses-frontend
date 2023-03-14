@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -23,6 +23,14 @@ function ResultsTabel() {
     dispatch(removeResult(id));
   };
 
+  function formatNumber(num) {
+    if (Number.isInteger(num)) {
+      return num;
+    } else {
+      return num.toFixed(1);
+    }
+  }
+
   return (
     <>
       {resultsStatus == "loading" ? (
@@ -46,7 +54,7 @@ function ResultsTabel() {
             <div>
               {results.map((result) => {
                 return (
-                  <div className="user-results__row" key={result._id}>
+                  <div className="user-results__row">
                     <div className="user-results__col">
                       <Link to={`/lesson/${result.lesson?._id}`}>{result.lesson?.title}</Link>
                     </div>
@@ -55,7 +63,7 @@ function ResultsTabel() {
                       {result.score} <span>из</span> {result.questionCounter}
                     </div>
                     <div className="user-results__col user-results__col--fb">
-                      {(result.score / result.questionCounter).toFixed(2) * 100}%
+                      {formatNumber(result.score / result.questionCounter) * 100}%
                     </div>
                     <div
                       onClick={() => handleRemoveResult(result._id)}
