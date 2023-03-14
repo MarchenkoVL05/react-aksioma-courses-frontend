@@ -1595,3 +1595,36 @@ img.clean-search {
     }
   }
 }
+
+.pagination {
+  margin-top: 25px;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  a {
+    padding: 15px;
+  }
+  li {
+    width: 42px;
+    height: 42px;
+    background: #a38ffd;
+    background: linear-gradient(175deg, #a38ffd 0%, #907fde 100%);
+    border-radius: 100%;
+    color: #fff;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &:hover {
+      background: #c3ae22;
+      background: linear-gradient(0deg, rgba(195, 174, 34, 1) 0%, rgb(236, 213, 112) 100%);
+    }
+  }
+  li.active {
+    background: #c3ae22;
+    background: linear-gradient(0deg, rgba(195, 174, 34, 1) 0%, rgb(236, 213, 112) 100%);
+  }
+}
