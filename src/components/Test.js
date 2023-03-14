@@ -12,16 +12,10 @@ function Test({ lesson, userInfo, questions }) {
 
   return (
     <div className="test">
-      <h4 className="test__title">Проверка знаний</h4>
-      {userInfo.role == "admin" && (
-        <button onClick={handleCreateQuestion} className="test__btn-create">
-          Добавить вопрос
-        </button>
-      )}
       {create ? (
         <CreateQuestion setCreate={setCreate} lesson={lesson} />
       ) : (
-        <QuestionsList userInfo={userInfo} questions={questions} lesson={lesson} />
+        <QuestionsList userInfo={userInfo} questions={questions} lesson={lesson} setCreate={setCreate} />
       )}
     </div>
   );
