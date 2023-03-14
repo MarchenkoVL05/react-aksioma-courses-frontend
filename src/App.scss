@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
 }
 
 a {
@@ -177,7 +177,7 @@ a {
   .select-wrapper {
     position: relative;
     &::after {
-      content: "▼";
+      content: '▼';
       font-size: 14px;
       color: #252525;
       position: absolute;
@@ -215,7 +215,8 @@ a {
     line-height: 37px;
     color: #ffffff;
     border: none;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+      rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     cursor: pointer;
     transition: 0.3s all;
     &:hover {
@@ -267,8 +268,9 @@ input.input-error {
   padding: 76px 81px;
   border-radius: 30px;
   background-color: #a38ffd;
-  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
-    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+    rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+    rgba(0, 0, 0, 0.09) 0px 32px 16px;
   img {
     max-height: 396px;
   }
@@ -307,7 +309,7 @@ input.input-error {
 .select-wrapper--appearance {
   position: relative;
   &::after {
-    content: "▼";
+    content: '▼';
     font-size: 14px;
     color: #252525;
     position: absolute;
@@ -320,7 +322,7 @@ input.input-error {
 .select-wrapper--create-form {
   position: relative;
   &::after {
-    content: "▼";
+    content: '▼';
     font-size: 14px;
     color: #252525;
     position: absolute;
@@ -526,14 +528,22 @@ img.clean-search {
   border-radius: 5px;
   &:hover {
     background: rgb(242, 224, 99);
-    background: linear-gradient(175deg, rgba(242, 224, 99, 1) 0%, rgba(224, 173, 0, 1) 100%);
+    background: linear-gradient(
+      175deg,
+      rgba(242, 224, 99, 1) 0%,
+      rgba(224, 173, 0, 1) 100%
+    );
   }
 }
 
 // LessonsList
 .lessons {
   background: rgb(246, 248, 255);
-  background: radial-gradient(circle, rgba(246, 248, 255, 1) 0%, rgba(248, 237, 255, 1) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(246, 248, 255, 1) 0%,
+    rgba(248, 237, 255, 1) 100%
+  );
   min-height: 100vh;
   padding: 50px 20px;
   &__wrapper {
@@ -618,7 +628,8 @@ img.clean-search {
       height: 100%;
       border: none;
       border-radius: 100%;
-      box-shadow: #11111a1a 0px 8px 24px, #11111a1a 0px 16px 56px, #11111a1a 0px 24px 80px;
+      box-shadow: #11111a1a 0px 8px 24px, #11111a1a 0px 16px 56px,
+        #11111a1a 0px 24px 80px;
       transition: 0.3s all;
       &:hover {
         transform: rotate(90deg);
@@ -629,7 +640,11 @@ img.clean-search {
 
 .detail-page-wrapper {
   background: rgb(246, 248, 255);
-  background: radial-gradient(circle, rgba(246, 248, 255, 1) 0%, rgba(248, 237, 255, 1) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(246, 248, 255, 1) 0%,
+    rgba(248, 237, 255, 1) 100%
+  );
   padding: 80px 15px;
   min-height: 100vh;
 }
@@ -672,10 +687,15 @@ img.clean-search {
     border-radius: 5px;
     font-size: 18px;
     font-weight: 600;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
+      rgba(0, 0, 0, 0.23) 0px 6px 6px;
     color: #000000;
     background: rgb(195, 174, 34);
-    background: linear-gradient(0deg, rgba(195, 174, 34, 1) 0%, rgba(255, 231, 122, 1) 100%);
+    background: linear-gradient(
+      0deg,
+      rgba(195, 174, 34, 1) 0%,
+      rgba(255, 231, 122, 1) 100%
+    );
     cursor: pointer;
   }
   &__container {
@@ -785,7 +805,7 @@ img.clean-search {
   border: none;
   cursor: pointer;
   &::after {
-    content: "Выйти";
+    content: 'Выйти';
     position: absolute;
     left: 0;
     bottom: 0;
@@ -794,7 +814,12 @@ img.clean-search {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(102.8deg, #ebb802 39.75%, rgba(255, 230, 0, 0.390625) 139.96%, #83ce08 139.97%);
+    background: linear-gradient(
+      102.8deg,
+      #ebb802 39.75%,
+      rgba(255, 230, 0, 0.390625) 139.96%,
+      #83ce08 139.97%
+    );
     border-radius: 0 0 10px 10px;
     font-weight: 500;
     font-size: 20px;
@@ -811,7 +836,8 @@ img.clean-search {
     margin-top: 20px;
     background: #f1e7f8;
     border: 1px solid #dcdcdc;
-    box-shadow: #00000066 0px 2px 4px, #0000004d 0px 7px 13px -3px, #00000033 0px -3px 0px inset;
+    box-shadow: #00000066 0px 2px 4px, #0000004d 0px 7px 13px -3px,
+      #00000033 0px -3px 0px inset;
     border-radius: 20px;
     padding: 50px 50px 50px 80px;
   }
@@ -830,7 +856,8 @@ img.clean-search {
     width: calc(50% - 40px);
     padding: 30px;
     border-radius: 15px;
-    box-shadow: #32325d40 0px 50px 100px -20px, #0000004d 0px 30px 60px -30px, #0a254059 0px -2px 6px 0px inset;
+    box-shadow: #32325d40 0px 50px 100px -20px, #0000004d 0px 30px 60px -30px,
+      #0a254059 0px -2px 6px 0px inset;
     position: relative;
   }
   &__question-remove {
@@ -870,12 +897,7 @@ img.clean-search {
     font-weight: 300;
     border-radius: 30px;
     background: linear-gradient(169.69deg, #bcb0f5 2.48%, #7f6bdb 92.3%);
-    box-shadow: #99999930 0px 10px 10px, #4242423b 0px 6px 6px;
     color: #fff;
-    transition: 0.5s all;
-    &:hover {
-      transform: scale(1.05);
-    }
   }
   &__btn {
     width: 300px;
@@ -892,7 +914,7 @@ img.clean-search {
     position: relative;
     cursor: pointer;
     &::after {
-      content: "Завершить";
+      content: 'Завершить';
       position: absolute;
       top: 0;
       left: 0;
@@ -913,7 +935,8 @@ img.clean-search {
       opacity: 1;
     }
     &:hover {
-      box-shadow: rgba(89, 89, 89, 0.19) 0px 10px 20px, rgba(61, 61, 61, 0.23) 0px 6px 6px;
+      box-shadow: rgba(89, 89, 89, 0.19) 0px 10px 20px,
+        rgba(61, 61, 61, 0.23) 0px 6px 6px;
     }
     &--disable {
       background: #f5e05c;
@@ -949,7 +972,7 @@ img.clean-search {
   margin-bottom: 0.4rem;
 }
 
-.b-contain input[type="checkbox"] ~ .b-input {
+.b-contain input[type='checkbox'] ~ .b-input {
   position: absolute;
   top: 0;
   left: 0;
@@ -961,7 +984,7 @@ img.clean-search {
   border-radius: 0rem;
 }
 
-.b-contain input[type="radio"] ~ .b-input {
+.b-contain input[type='radio'] ~ .b-input {
   position: absolute;
   top: 0;
   left: 0;
@@ -973,8 +996,8 @@ img.clean-search {
   border-radius: 6.15rem;
 }
 
-.b-contain input[type="checkbox"] ~ .b-input::after {
-  content: "";
+.b-contain input[type='checkbox'] ~ .b-input::after {
+  content: '';
   position: absolute;
   display: none;
   left: 8px;
@@ -987,8 +1010,8 @@ img.clean-search {
   transform: rotate(45deg);
 }
 
-.b-contain input[type="radio"] ~ .b-input::after {
-  content: "";
+.b-contain input[type='radio'] ~ .b-input::after {
+  content: '';
   position: absolute;
   display: none;
   left: 5px;
@@ -1000,7 +1023,7 @@ img.clean-search {
   transition: background 250ms;
 }
 
-.b-contain input[type="checkbox"]:disabled ~ .b-input::after {
+.b-contain input[type='checkbox']:disabled ~ .b-input::after {
   border-color: #ffffff;
 }
 
@@ -1008,14 +1031,14 @@ img.clean-search {
   display: block;
 }
 
-.b-contain:hover input[type="checkbox"]:not([disabled]) ~ .b-input,
-.b-contain input[type="checkbox"]:focus ~ .b-input {
+.b-contain:hover input[type='checkbox']:not([disabled]) ~ .b-input,
+.b-contain input[type='checkbox']:focus ~ .b-input {
   background: rgb(255, 255, 255);
   border-color: #64748b;
 }
 
-.b-contain:hover input[type="radio"]:not([disabled]) ~ .b-input,
-.b-contain input[type="radio"]:focus ~ .b-input {
+.b-contain:hover input[type='radio']:not([disabled]) ~ .b-input,
+.b-contain input[type='radio']:focus ~ .b-input {
   background: #e2e8f0;
   border-color: #7b6eb8;
 }
@@ -1024,34 +1047,34 @@ img.clean-search {
   box-shadow: 0 0 0 2px #7b6eb8;
 }
 
-.b-contain input[type="checkbox"]:checked ~ .b-input {
+.b-contain input[type='checkbox']:checked ~ .b-input {
   background: #a38ffd;
   border-color: #7b6eb8;
 }
 
-.b-contain input[type="radio"]:checked ~ .b-input {
+.b-contain input[type='radio']:checked ~ .b-input {
   background: #7b6eb8;
   border-color: #7b6eb8;
 }
 
-.b-contain input[type="checkbox"]:disabled ~ .b-input,
-.b-contain input[type="radio"]:disabled ~ .b-input {
+.b-contain input[type='checkbox']:disabled ~ .b-input,
+.b-contain input[type='radio']:disabled ~ .b-input {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.b-contain input[type="radio"]:disabled ~ .b-input::after {
+.b-contain input[type='radio']:disabled ~ .b-input::after {
   background: #ffffff;
 }
 
-.b-contain:hover input[type="checkbox"]:not([disabled]):checked ~ .b-input,
-.b-contain input[type="checkbox"]:checked:focus ~ .b-input {
+.b-contain:hover input[type='checkbox']:not([disabled]):checked ~ .b-input,
+.b-contain input[type='checkbox']:checked:focus ~ .b-input {
   background: #7b6eb8;
   border-color: #7b6eb8;
 }
 
-.b-contain:hover input[type="radio"]:not([disabled]):checked ~ .b-input,
-.b-contain input[type="radio"]:checked:focus ~ .b-input {
+.b-contain:hover input[type='radio']:not([disabled]):checked ~ .b-input,
+.b-contain input[type='radio']:checked:focus ~ .b-input {
   background: #7b6eb8;
   border-color: #a38ffd;
 }
@@ -1153,7 +1176,11 @@ img.clean-search {
   }
   &__cancel {
     background: rgb(195, 174, 34);
-    background: linear-gradient(0deg, rgba(195, 174, 34, 1) 0%, rgb(236, 213, 112) 100%);
+    background: linear-gradient(
+      0deg,
+      rgba(195, 174, 34, 1) 0%,
+      rgb(236, 213, 112) 100%
+    );
   }
   &__submit {
     background: #7022c3;
@@ -1224,7 +1251,8 @@ img.clean-search {
     justify-content: space-between;
     gap: 5px;
     border-radius: 10px;
-    box-shadow: #2d2d2d66 0px 2px 4px, #7171714d 0px 7px 13px -3px, #2d2d2d33 0px -3px 0px inset;
+    box-shadow: #2d2d2d66 0px 2px 4px, #7171714d 0px 7px 13px -3px,
+      #2d2d2d33 0px -3px 0px inset;
     img {
       height: 27px;
       cursor: pointer;
@@ -1233,7 +1261,14 @@ img.clean-search {
 }
 
 .create-q {
-  max-width: 1300px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 1300px;
+  height: 636px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -1302,7 +1337,7 @@ img.clean-search {
       border: none;
       cursor: pointer;
       border-radius: 7px;
-      font-size: 22px;
+      font-size: 20px;
       color: white;
       box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px, rgb(0 0 0 / 23%) 0px 3px 6px;
       &:nth-child(1) {
@@ -1311,7 +1346,11 @@ img.clean-search {
       }
       &:nth-child(2) {
         background: #c3ae22;
-        background: linear-gradient(0deg, rgba(195, 174, 34, 1) 0%, rgb(236, 213, 112) 100%);
+        background: linear-gradient(
+          0deg,
+          rgba(195, 174, 34, 1) 0%,
+          rgb(236, 213, 112) 100%
+        );
       }
       &:nth-child(3) {
         background: #7022c3;
@@ -1504,7 +1543,8 @@ img.clean-search {
   right: -25px;
   top: 45px;
   background-color: white;
-  box-shadow: #5e5e8a40 0px 50px 100px -20px, #8181814d 0px 30px 60px -30px, #274c7259 0px -2px 6px 0px inset;
+  box-shadow: #5e5e8a40 0px 50px 100px -20px, #8181814d 0px 30px 60px -30px,
+    #274c7259 0px -2px 6px 0px inset;
   border-radius: 10px;
   border: 1px solid #eeeeee;
   &__btn {
