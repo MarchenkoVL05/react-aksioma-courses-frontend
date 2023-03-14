@@ -6,10 +6,6 @@ import CreateQuestion from "./CreateQuestion";
 function Test({ lesson, userInfo, questions }) {
   const [create, setCreate] = useState(false);
 
-  const handleCreateQuestion = () => {
-    setCreate(true);
-  };
-
   return (
     <div className="test">
       {create ? (
