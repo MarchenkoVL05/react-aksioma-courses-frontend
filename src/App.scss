@@ -1449,17 +1449,27 @@ img.clean-search {
   &__head-wrapper {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    box-shadow: #00000029 0px 3px 6px, #0000003b 0px 3px 6px;
+    border-radius: 5px 5px 0 0;
+    background: #fff;
+    box-shadow: #00000026 1.95px 1.95px 2.6px;
+    transition: 0.3s all;
+    &:hover {
+      background: #efefef;
+    }
   }
   &__head {
     text-align: center;
     padding: 15px;
     font-size: 19px;
     font-weight: 500;
+    cursor: pointer;
   }
   &__info {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    &--hide {
+      display: none;
+    }
   }
   &__column {
     text-align: center;
@@ -1472,6 +1482,10 @@ img.clean-search {
     img {
       height: 30px;
     }
+  }
+  &__p {
+    color: #a0a0a0;
+    margin-top: 15px;
   }
 }
 
