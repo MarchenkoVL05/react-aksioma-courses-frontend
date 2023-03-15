@@ -68,7 +68,9 @@ function ResultsTabel() {
                 return (
                   <div className="user-results__row" key={result._id}>
                     <div className="user-results__col">
-                      <Link to={`/lesson/${result.lesson?._id}`}>{result.lesson?.title}</Link>
+                      <Link to={`/lesson/${result.lesson?._id}`} state={{ access: true }}>
+                        {result.lesson?.title}
+                      </Link>
                     </div>
                     <div className="user-results__col">{result.user?.fullName}</div>
                     <div className="user-results__col user-results__col--fb">
