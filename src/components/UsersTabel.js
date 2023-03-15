@@ -51,6 +51,7 @@ function UsersTabel() {
 
   return (
     <>
+      <h2 className="users-panel-title">Список пользоватей</h2>
       <div className="users-panel">
         {usersStatus == "loading" && <Loader auto={true} />}
         {usersStatus !== "loading" && (
