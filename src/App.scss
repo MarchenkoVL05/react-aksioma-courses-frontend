@@ -1628,3 +1628,29 @@ img.clean-search {
     background: linear-gradient(0deg, rgba(195, 174, 34, 1) 0%, rgb(236, 213, 112) 100%);
   }
 }
+
+.lesson-block {
+  width: 390px;
+  position: relative;
+  cursor: pointer;
+  transition: 0.5s all;
+  border-radius: 13px;
+  &:hover {
+    transform: translateY(-7px);
+  }
+  img {
+    height: 100%;
+    box-shadow: #00000059 0px 5px 15px;
+    border-radius: 13px;
+  }
+  p {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    width: 90%;
+  }
+}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 
 import Header from "../components/Header";
 import LessonsList from "../components/LessonsList";
@@ -29,7 +29,7 @@ function MainPage() {
   const status = useSelector((state) => state.lesson.status);
 
   useEffect(() => {
-    if (searchParams.get("search")) {
+    if (userInfo.role == "admin" && searchParams.get("search")) {
       dispatch(searchedLesson([]));
       setSearchStatus("loading");
       const searchObj = {

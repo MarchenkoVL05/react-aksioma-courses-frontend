@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 
 import useAuth from "../hooks/useAuth.js";
 import { fetchOneLesson } from "../redux/slices/lessonSlice.js";
@@ -14,10 +14,17 @@ import ErrorPage from "../pages/ErrorPage";
 function LessonPage() {
   const dispatch = useDispatch();
   const params = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const accessState = location.state;
   const userInfo = useAuth();
 
   useEffect(() => {
-    dispatch(fetchOneLesson(params.lessonId));
+    if (accessState !== null) {
+      dispatch(fetchOneLesson(params.lessonId));
+    } else {
+      navigate("/");
+    }
   }, []);
 
   const lesson = useSelector((state) => state.lesson.lesson);

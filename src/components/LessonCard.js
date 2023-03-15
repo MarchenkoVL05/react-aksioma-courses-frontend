@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { removeLesson } from "../redux/slices/lessonSlice";
@@ -6,6 +7,7 @@ import preview from "../images/video-preview.png";
 import remove from "../images/removeLesson.svg";
 
 function LessonCard({ userInfo, lesson, setIsRemoveClicked }) {
+  const [myState, setMyState] = useState("test");
   const dispatch = useDispatch();
 
   const handleRemoveLesson = (lessonId) => {
@@ -36,7 +38,7 @@ function LessonCard({ userInfo, lesson, setIsRemoveClicked }) {
           <img src={remove} />
         </button>
       )}
-      <Link to={`/lesson/${lesson._id}`} className="lessons__item-link-wrapper">
+      <Link to={`/lesson/${lesson._id}`} state={{ access: true }} className="lessons__item-link-wrapper">
         <img
           className="lessons__item-preview"
           src={lesson.thumbnail ? `http://localhost:4444${lesson.thumbnail}` : preview}

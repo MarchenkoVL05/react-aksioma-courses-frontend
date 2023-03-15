@@ -21,7 +21,7 @@ function Header({ userInfo }) {
     <>
       <header className="header">
         <div className="header__left">
-          <SearchInput />
+          <SearchInput userInfo={userInfo} />
           <CategorySelect userInfo={userInfo} />
           {userInfo.role == "admin" && (
             <>
