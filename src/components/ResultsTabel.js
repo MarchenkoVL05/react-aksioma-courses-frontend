@@ -35,7 +35,7 @@ function ResultsTabel() {
   const itemsToRender = results.slice(startIndex, startIndex + itemsPerPage);
 
   // Удалить результат из таблицы
-  const handleRemoveResult = (id) => {
+  const handleRemoveResult = (id, userId) => {
     const indexToRemove = results.findIndex((result) => result._id === id);
 
     const t = (results[indexToRemove].score / results[indexToRemove].questionCounter) * 100;
@@ -44,7 +44,7 @@ function ResultsTabel() {
     if (t >= 75) {
       const successedResults = [];
       results.slice(indexToRemove + 1).forEach((result) => {
-        if ((result.score / result.questionCounter) * 100 >= 75) {
+        if ((result.score / result.questionCounter) * 100 >= 75 && result.user._id == userId) {
           successedResults.push(result);
         }
       });
@@ -126,7 +126,7 @@ function ResultsTabel() {
                       {formatNumber((result.score / result.questionCounter) * 100)}%
                     </div>
                     <div
-                      onClick={() => handleRemoveResult(result._id)}
+                      onClick={() => handleRemoveResult(result._id, result.user._id)}
                       className="user-results__col user-results__col--remove"
                     >
                       удалить
