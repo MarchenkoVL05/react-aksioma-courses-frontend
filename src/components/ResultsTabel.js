@@ -1,10 +1,9 @@
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
-import { fetchResults } from "../redux/slices/resultSlice";
-import { removeResult } from "../redux/slices/resultSlice";
+import { fetchResults, removeResult, removeProgress } from "../redux/slices/resultSlice";
 
 import Loader from "./Loader";
 
@@ -12,7 +11,7 @@ import statisticsImg from "../images/statistics.png";
 
 function ResultsTabel() {
   const [removeResultError, setRemoveResultError] = useState(false);
-  const [removinLessonId, setRemovingLessonId] = useState(null);
+  const [removingResults, setRemovingResults] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
 
   const itemsPerPage = 5; // количество элементов на странице
@@ -41,34 +40,37 @@ function ResultsTabel() {
 
     const t = (results[indexToRemove].score / results[indexToRemove].questionCounter) * 100;
 
+    // Если происходит удаление успешно сданного урока => проверь есть ли прогресс после него
     if (t >= 75) {
-      const hasOtherFullScores = results
-        .slice(indexToRemove + 1)
-        .some((result) => (result.score / result.questionCounter) * 100 >= 75);
+      const successedResults = [];
+      results.slice(indexToRemove + 1).forEach((result) => {
+        if ((result.score / result.questionCounter) * 100 >= 75) {
+          successedResults.push(result);
+        }
+      });
 
-      if (hasOtherFullScores) {
+      if (successedResults.length !== 0) {
         setRemoveResultError(
-          "Ученик успешно прошёл этот урок и продвинулся дальше, вы хотите удалить этот результат и весь последующий прогресс?"
+          "Ученик успешно прошёл этот урок и продвинулся дальше. Вы хотите удалить этот результат и весь последующий прогресс?"
         );
-        setRemovingLessonId(id);
+        setRemovingResults([...successedResults, results[indexToRemove]]);
         return;
       }
     }
     dispatch(removeResult(id));
   };
 
-  // TODO: Необходимо не просто подтвержать удаление урока, а удалять все последующие успешные результаты
   // Подтвердить удаление
-  function confirmRemoving(id) {
-    dispatch(removeResult(removinLessonId));
+  function confirmRemoving() {
+    dispatch(removeProgress(removingResults));
     setRemoveResultError(false);
-    setRemovingLessonId(null);
+    setRemovingResults(null);
   }
 
   // Отменить удаление
   function cancelRemoving() {
     setRemoveResultError(false);
-    setRemovingLessonId(null);
+    setRemovingResults(null);
   }
 
   // Форматируй результат ученика
@@ -110,28 +112,26 @@ function ResultsTabel() {
             <div>
               {itemsToRender.map((result) => {
                 return (
-                  <Fragment key={result._id}>
-                    <div className="user-results__row">
-                      <div className="user-results__col">
-                        <Link to={`/lesson/${result.lesson?._id}`} state={{ access: true }}>
-                          {result.lesson?.title}
-                        </Link>
-                      </div>
-                      <div className="user-results__col">{result.user?.fullName}</div>
-                      <div className="user-results__col user-results__col--fb">
-                        {result.score} <span>из</span> {result.questionCounter}
-                      </div>
-                      <div className="user-results__col user-results__col--fb">
-                        {formatNumber(result.score / result.questionCounter) * 100}%
-                      </div>
-                      <div
-                        onClick={() => handleRemoveResult(result._id)}
-                        className="user-results__col user-results__col--remove"
-                      >
-                        удалить
-                      </div>
+                  <div className="user-results__row" key={result._id}>
+                    <div className="user-results__col">
+                      <Link to={`/lesson/${result.lesson?._id}`} state={{ access: true }}>
+                        {result.lesson?.title}
+                      </Link>
                     </div>
-                  </Fragment>
+                    <div className="user-results__col">{result.user?.fullName}</div>
+                    <div className="user-results__col user-results__col--fb">
+                      {result.score} <span>из</span> {result.questionCounter}
+                    </div>
+                    <div className="user-results__col user-results__col--fb">
+                      {formatNumber((result.score / result.questionCounter) * 100)}%
+                    </div>
+                    <div
+                      onClick={() => handleRemoveResult(result._id)}
+                      className="user-results__col user-results__col--remove"
+                    >
+                      удалить
+                    </div>
+                  </div>
                 );
               })}
             </div>

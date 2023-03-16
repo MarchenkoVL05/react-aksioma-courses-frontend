@@ -35,6 +35,24 @@ export const removeResult = createAsyncThunk("result/removeResult", async (id) =
   }
 });
 
+export const removeProgress = createAsyncThunk("result/removeProgress", async (progress) => {
+  try {
+    const { data } = await axios.delete("/result/progress", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      data: {
+        progress,
+      },
+    });
+
+    return data;
+  } catch (error) {
+    const customError = error.response ? error.response.data.message : "Network Error";
+    throw customError;
+  }
+});
+
 const resultSlice = createSlice({
   name: "result",
   initialState: {
@@ -68,6 +86,23 @@ const resultSlice = createSlice({
         });
       })
       .addCase(removeResult.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.error;
+      })
+      // Удалить прогресс ученика
+      .addCase(removeProgress.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(removeProgress.fulfilled, (state, action) => {
+        state.status = "resolved";
+        const removedResults = action.payload;
+        removedResults.forEach((removedResult) => {
+          state.results = state.results.filter((result) => {
+            return result._id !== removedResult._id;
+          });
+        });
+      })
+      .addCase(removeProgress.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.error;
       });

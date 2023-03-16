@@ -38,7 +38,7 @@ const ResultChart = ({ result }) => {
         <div className="chart-overlay" />
       </div>
       <div className="result-text">
-        {useScore >= 70 ? (
+        {useScore >= 75 ? (
           <div className="result-text-container">
             <i className="fas fa-smile fa-2x result-icon"></i>
             <p className="result-message">Отличный результат!</p>
