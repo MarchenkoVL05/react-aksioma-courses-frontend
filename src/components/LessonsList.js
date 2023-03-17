@@ -67,9 +67,6 @@ function LessonsList({ lessons, status, userInfo, searchError, searchStatus }) {
 
   return (
     <>
-      <div ref={warningRef} className="warning">
-        {removeError || message}
-      </div>
       {searchStatus == "loading" ? (
         <section className="lessons">
           <h1 className="lessons__not-found">Ищем уроки...</h1>
@@ -97,10 +94,13 @@ function LessonsList({ lessons, status, userInfo, searchError, searchStatus }) {
                   <div className="course-title-wrapper">
                     <h2 className="course-title">{course ? course : "Уроки вне курсов"}</h2>
                   </div>
+                  <div ref={warningRef} className="warning">
+                    {removeError || message}
+                  </div>
                   <div className="lessons__wrapper">
                     <div className="lessons__inner">
                       {courses[course].lessons.map((lesson, lessonIndex) => {
-                        if (lesson.counter < userInfo.lessonsAccessed) {
+                        if (lesson && lesson.counter < userInfo.lessonsAccessed) {
                           return (
                             <LessonCard
                               userInfo={userInfo}
