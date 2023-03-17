@@ -1,5 +1,6 @@
-import { useRef, useEffect, useState, Fragment } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import ReactPaginate from "react-paginate";
 
 import LessonCard from "./LessonCard";
 import LessonBlocked from "./LessonBlocked";
@@ -7,46 +8,21 @@ import LessonLoader from "../components/LessonLoader";
 
 function LessonsList({ lessons, status, userInfo, searchError, searchStatus }) {
   const [isRemoveClicked, setIsRemoveClicked] = useState(false);
-  const [courses, setCourses] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const warningRef = useRef();
 
   const removeError = useSelector((state) => state.lesson.error);
   const message = useSelector((state) => state.lesson.message);
 
-  useEffect(() => {
-    const lessonsWithCounter = lessons.map((obj, index) => {
-      return { ...obj, counter: index };
-    });
+  const itemsPerPage = userInfo.role == "admin" ? 8 : lessons.length;
+  const handlePageClick = (data) => {
+    const selectedPage = data.selected;
+    setCurrentPage(selectedPage);
+  };
 
-    const groupByCourse = lessonsWithCounter.reduce((acc, obj) => {
-      const key = obj.course;
-
-      if (!acc[key]) {
-        acc[key] = { lastLesson: null, lessons: [] };
-      }
-
-      const group = acc[key];
-
-      if (group.lastLesson !== null) {
-        const nextIndex = group.lastLesson.counter + 1;
-        if (nextIndex !== obj.counter) {
-          // There's a gap in the lesson indexes, so we'll add a placeholder
-          const numMissing = obj.counter - nextIndex;
-          group.lessons = group.lessons.concat(Array(numMissing).fill(null));
-        }
-      }
-
-      group.lessons.push(obj);
-      group.lastLesson = obj;
-
-      return acc;
-    }, {});
-
-    console.log(groupByCourse);
-
-    setCourses(groupByCourse);
-  }, [lessons]);
+  const startIndex = currentPage * itemsPerPage;
+  const itemsToRender = lessons.slice(startIndex, startIndex + itemsPerPage);
 
   useEffect(() => {
     if (removeError && isRemoveClicked) {
@@ -75,59 +51,57 @@ function LessonsList({ lessons, status, userInfo, searchError, searchStatus }) {
         <section className="lessons">
           <h1 className="lessons__not-found">Такой урок не найден</h1>
         </section>
-      ) : status === "loading" ? (
-        <section className="lessons">
-          <div className="lessons__wrapper">
-            <div className="lessons__inner">
-              {[...Array(8)].map((_, index) => {
-                return <LessonLoader key={index} />;
-              })}
-            </div>
-          </div>
-        </section>
       ) : (
-        <section className="lessons">
-          {courses &&
-            Object.keys(courses).map((course, courseIndex) => {
-              return (
-                <Fragment key={courseIndex}>
-                  <div className="course-title-wrapper">
-                    <h2 className="course-title">{course ? course : "Уроки вне курсов"}</h2>
-                  </div>
-                  <div ref={warningRef} className="warning">
-                    {removeError || message}
-                  </div>
-                  <div className="lessons__wrapper">
-                    <div className="lessons__inner">
-                      {courses[course].lessons.map((lesson, lessonIndex) => {
-                        if (lesson && lesson.counter < userInfo.lessonsAccessed) {
-                          return (
-                            <LessonCard
-                              userInfo={userInfo}
-                              lesson={lesson}
-                              setIsRemoveClicked={setIsRemoveClicked}
-                              key={lesson._id}
-                            />
-                          );
-                        } else if (userInfo.role == "admin") {
-                          return (
-                            <LessonCard
-                              userInfo={userInfo}
-                              lesson={lesson}
-                              setIsRemoveClicked={setIsRemoveClicked}
-                              key={lesson._id}
-                            />
-                          );
-                        } else {
-                          return <LessonBlocked key={lessonIndex} />;
-                        }
-                      })}
-                    </div>
-                  </div>
-                </Fragment>
-              );
-            })}
-        </section>
+        <>
+          <section className="lessons">
+            <div ref={warningRef} className="warning">
+              {removeError || message}
+            </div>
+            <div className="lessons__wrapper">
+              <div className="lessons__inner">
+                {status === "loading"
+                  ? [...Array(8)].map((_, index) => {
+                      return <LessonLoader key={index} />;
+                    })
+                  : itemsToRender.map((lesson, lessonIndex) => {
+                      if (lessonIndex < userInfo.lessonsAccessed) {
+                        return (
+                          <LessonCard
+                            userInfo={userInfo}
+                            lesson={lesson}
+                            setIsRemoveClicked={setIsRemoveClicked}
+                            key={lesson._id}
+                          />
+                        );
+                      } else if (userInfo.role == "admin") {
+                        return (
+                          <LessonCard
+                            userInfo={userInfo}
+                            lesson={lesson}
+                            setIsRemoveClicked={setIsRemoveClicked}
+                            key={lesson._id}
+                          />
+                        );
+                      } else {
+                        return <LessonBlocked key={lessonIndex} />;
+                      }
+                    })}
+              </div>
+            </div>
+            {userInfo.role == "admin" && (
+              <ReactPaginate
+                pageCount={Math.ceil(lessons.length / itemsPerPage)} // количество страниц
+                pageRangeDisplayed={3} // количество отображаемых страниц (слева и справа от текущей)
+                marginPagesDisplayed={1} // количество отображаемых границ
+                onPageChange={handlePageClick} // обработчик события выбора страницы
+                containerClassName={"pagination"} // класс для контейнера
+                activeClassName={"active"} // класс для активной страницы
+                previousLabel={"\u2190"}
+                nextLabel={"\u2192"}
+              />
+            )}
+          </section>
+        </>
       )}
     </>
   );
