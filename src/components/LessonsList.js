@@ -1,6 +1,5 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, Fragment } from "react";
 import { useSelector } from "react-redux";
-import ReactPaginate from "react-paginate";
 
 import LessonCard from "./LessonCard";
 import LessonBlocked from "./LessonBlocked";
@@ -8,21 +7,25 @@ import LessonLoader from "../components/LessonLoader";
 
 function LessonsList({ lessons, status, userInfo, searchError, searchStatus }) {
   const [isRemoveClicked, setIsRemoveClicked] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [courses, setCourses] = useState(null);
 
   const warningRef = useRef();
 
   const removeError = useSelector((state) => state.lesson.error);
   const message = useSelector((state) => state.lesson.message);
 
-  const itemsPerPage = userInfo.role == "admin" ? 8 : lessons.length;
-  const handlePageClick = (data) => {
-    const selectedPage = data.selected;
-    setCurrentPage(selectedPage);
-  };
+  useEffect(() => {
+    const groupByCourse = lessons.reduce((acc, obj) => {
+      const key = obj.course;
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(obj);
+      return acc;
+    }, {});
 
-  const startIndex = currentPage * itemsPerPage;
-  const itemsToRender = lessons.slice(startIndex, startIndex + itemsPerPage);
+    setCourses(groupByCourse);
+  }, [lessons]);
 
   useEffect(() => {
     if (removeError && isRemoveClicked) {
@@ -43,6 +46,9 @@ function LessonsList({ lessons, status, userInfo, searchError, searchStatus }) {
 
   return (
     <>
+      <div ref={warningRef} className="warning">
+        {removeError || message}
+      </div>
       {searchStatus == "loading" ? (
         <section className="lessons">
           <h1 className="lessons__not-found">Ищем уроки...</h1>
@@ -51,57 +57,56 @@ function LessonsList({ lessons, status, userInfo, searchError, searchStatus }) {
         <section className="lessons">
           <h1 className="lessons__not-found">Такой урок не найден</h1>
         </section>
+      ) : status === "loading" ? (
+        <section className="lessons">
+          <div className="lessons__wrapper">
+            <div className="lessons__inner">
+              {[...Array(8)].map((_, index) => {
+                return <LessonLoader key={index} />;
+              })}
+            </div>
+          </div>
+        </section>
       ) : (
-        <>
-          <section className="lessons">
-            <div ref={warningRef} className="warning">
-              {removeError || message}
-            </div>
-            <div className="lessons__wrapper">
-              <div className="lessons__inner">
-                {status === "loading"
-                  ? [...Array(8)].map((_, index) => {
-                      return <LessonLoader key={index} />;
-                    })
-                  : itemsToRender.map((lesson, lessonIndex) => {
-                      if (lessonIndex < userInfo.lessonsAccessed) {
-                        return (
-                          <LessonCard
-                            userInfo={userInfo}
-                            lesson={lesson}
-                            setIsRemoveClicked={setIsRemoveClicked}
-                            key={lesson._id}
-                          />
-                        );
-                      } else if (userInfo.role == "admin") {
-                        return (
-                          <LessonCard
-                            userInfo={userInfo}
-                            lesson={lesson}
-                            setIsRemoveClicked={setIsRemoveClicked}
-                            key={lesson._id}
-                          />
-                        );
-                      } else {
-                        return <LessonBlocked key={lessonIndex} />;
-                      }
-                    })}
-              </div>
-            </div>
-            {userInfo.role == "admin" && (
-              <ReactPaginate
-                pageCount={Math.ceil(lessons.length / itemsPerPage)} // количество страниц
-                pageRangeDisplayed={3} // количество отображаемых страниц (слева и справа от текущей)
-                marginPagesDisplayed={1} // количество отображаемых границ
-                onPageChange={handlePageClick} // обработчик события выбора страницы
-                containerClassName={"pagination"} // класс для контейнера
-                activeClassName={"active"} // класс для активной страницы
-                previousLabel={"\u2190"}
-                nextLabel={"\u2192"}
-              />
-            )}
-          </section>
-        </>
+        <section className="lessons">
+          {courses &&
+            Object.keys(courses).map((course, courseIndex) => {
+              return (
+                <Fragment key={courseIndex}>
+                  <div className="course-title-wrapper">
+                    <h2 className="course-title">{course ? course : "Уроки вне курсов"}</h2>
+                  </div>
+                  <div className="lessons__wrapper">
+                    <div className="lessons__inner">
+                      {courses[course].map((lesson, lessonIndex) => {
+                        if (lessonIndex < userInfo.lessonsAccessed) {
+                          return (
+                            <LessonCard
+                              userInfo={userInfo}
+                              lesson={lesson}
+                              setIsRemoveClicked={setIsRemoveClicked}
+                              key={lesson._id}
+                            />
+                          );
+                        } else if (userInfo.role == "admin") {
+                          return (
+                            <LessonCard
+                              userInfo={userInfo}
+                              lesson={lesson}
+                              setIsRemoveClicked={setIsRemoveClicked}
+                              key={lesson._id}
+                            />
+                          );
+                        } else {
+                          return <LessonBlocked key={lessonIndex} />;
+                        }
+                      })}
+                    </div>
+                  </div>
+                </Fragment>
+              );
+            })}
+        </section>
       )}
     </>
   );
