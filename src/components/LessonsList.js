@@ -15,14 +15,35 @@ function LessonsList({ lessons, status, userInfo, searchError, searchStatus }) {
   const message = useSelector((state) => state.lesson.message);
 
   useEffect(() => {
-    const groupByCourse = lessons.reduce((acc, obj) => {
+    const lessonsWithCounter = lessons.map((obj, index) => {
+      return { ...obj, counter: index };
+    });
+
+    const groupByCourse = lessonsWithCounter.reduce((acc, obj) => {
       const key = obj.course;
+
       if (!acc[key]) {
-        acc[key] = [];
+        acc[key] = { lastLesson: null, lessons: [] };
       }
-      acc[key].push(obj);
+
+      const group = acc[key];
+
+      if (group.lastLesson !== null) {
+        const nextIndex = group.lastLesson.counter + 1;
+        if (nextIndex !== obj.counter) {
+          // There's a gap in the lesson indexes, so we'll add a placeholder
+          const numMissing = obj.counter - nextIndex;
+          group.lessons = group.lessons.concat(Array(numMissing).fill(null));
+        }
+      }
+
+      group.lessons.push(obj);
+      group.lastLesson = obj;
+
       return acc;
     }, {});
+
+    console.log(groupByCourse);
 
     setCourses(groupByCourse);
   }, [lessons]);
@@ -78,8 +99,8 @@ function LessonsList({ lessons, status, userInfo, searchError, searchStatus }) {
                   </div>
                   <div className="lessons__wrapper">
                     <div className="lessons__inner">
-                      {courses[course].map((lesson, lessonIndex) => {
-                        if (lessonIndex < userInfo.lessonsAccessed) {
+                      {courses[course].lessons.map((lesson, lessonIndex) => {
+                        if (lesson.counter < userInfo.lessonsAccessed) {
                           return (
                             <LessonCard
                               userInfo={userInfo}
